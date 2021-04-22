@@ -7,6 +7,12 @@ const InfiniteQuizScroll = (props) => {
         title: "test",
         last_updated: new Date(10000),
         quiz_difficulty: "hard"
+    },
+    {
+        id: "456",
+        title: "test2",
+        last_updated: new Date(10000),
+        quiz_difficulty: "easy"
     }]
     return (
         <InfiniteScroll

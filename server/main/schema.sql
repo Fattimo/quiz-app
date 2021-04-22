@@ -4,7 +4,9 @@ CREATE TABLE quizzes (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255),
     last_updated DATE,
-    quiz_difficulty difficulty
+    quiz_difficulty difficulty,
+    body TEXT,
+    num_questions INT DEFAULT 0
 )
 
 CREATE TABLE questions (

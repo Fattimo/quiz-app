@@ -8,7 +8,7 @@ const QuizCard = (props) => {
                 </div>
                 <div className="p-8">
                     <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
-                    <a href={`/quiz/${props.item.id}`} className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">{props.item.title}</a>
+                    <a href={`/quizzes/${props.item.id}`} className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">{props.item.title}</a>
                     <p className="mt-2 text-gray-500">Difficulty: {props.item.quiz_difficulty}</p>
                 </div>
             </div>
