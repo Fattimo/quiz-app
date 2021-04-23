@@ -1,11 +1,11 @@
 import CreateQuizCard from "./Home/CreateQuizCard";
 import InfiniteQuizScroll from "./Home/InfiniteQuizScroll"
 
-function Home() {
+function Home(props) {
     return (
         <div>
             <h2>Home</h2>
-            <CreateQuizCard />
+            {props.edit === true ? <CreateQuizCard /> : ""}
             <InfiniteQuizScroll />
         </div>
     );

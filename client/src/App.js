@@ -11,21 +11,18 @@ function App() {
   return (
     <Router>
       <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/quizzes">Topics</Link>
-          </li>
-        </ul>
+        <div className="flex justify-around">
+          <div>
+            <Link to="/">Take a Quiz</Link>
+          </div>
+          <div>
+            <Link to="/edit">Edit Quizzes</Link>
+          </div>
+        </div>
 
         <Switch>
-          <Route path="/about">
-            <About />
+          <Route path="/edit">
+            <Home edit={true} />
           </Route>
           <Route path="/quizzes">
             <Quiz />
@@ -37,10 +34,6 @@ function App() {
       </div>
     </Router>
   );
-}
-
-function About() {
-  return <h2>About</h2>;
 }
 
 export default App;
