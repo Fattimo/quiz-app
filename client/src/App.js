@@ -3,32 +3,28 @@ import {
   Switch,
   Route,
   Link,
+  Redirect,
 } from 'react-router-dom'
+import EditPage from './pages/Edit';
 import Home from './pages/Home'
+import Nav from './pages/Nav';
 import Quiz from './pages/QuizView';
 
 function App() {
   return (
     <Router>
       <div>
-        <div className="flex justify-around">
-          <div>
-            <Link to="/">Take a Quiz</Link>
-          </div>
-          <div>
-            <Link to="/edit">Edit Quizzes</Link>
-          </div>
-        </div>
+        <Nav />
 
         <Switch>
           <Route path="/edit">
-            <Home edit={true} />
+            <EditPage/>
           </Route>
           <Route path="/quizzes">
             <Quiz />
           </Route>
           <Route path="/">
-            <Home />
+            <Redirect to="/quizzes" />
           </Route>
         </Switch>
       </div>

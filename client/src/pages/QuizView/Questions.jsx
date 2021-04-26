@@ -1,7 +1,6 @@
-import InfiniteScroll from "react-infinite-scroll-component"
 import QuestionCard from "./QuestionCard"
 
-const InfiniteQuestionScroll = (props) => {
+const Questions = (props) => {
     const items = [{
         id: "123",
         title: "test",
@@ -15,17 +14,12 @@ const InfiniteQuestionScroll = (props) => {
         quiz_difficulty: "easy"
     }]
     return (
-        <InfiniteScroll
-            dataLength={items.length}
-            hasMore={false}
-            next={()=>{}}
-            loader={<h4>Loading...</h4>}
-        >
+        <div>
             {items.map((i, index) => (
                 <QuestionCard key={index} number={index} item={i}></QuestionCard>
             ))}
-        </InfiniteScroll>
+        </div>
     )
 }
 
-export default InfiniteQuestionScroll
+export default Questions

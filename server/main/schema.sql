@@ -6,20 +6,24 @@ CREATE TABLE quizzes (
     last_updated DATE,
     quiz_difficulty difficulty,
     body TEXT,
-    num_questions INT DEFAULT 0
+    img TEXT,
+    color TEXT, --replace with enum
+    num_questions INT DEFAULT 0,
+    creator INT REFERENCES users(username) DEFAULT -1,
+    likes INT DEFAULT 0,
+    liked_user_ids INT[] DEFAULT ARRAY[]::INT[]
 )
 
 CREATE TABLE questions (
     id SERIAL PRIMARY KEY,
     quiz_id INT REFERENCES quizzes(id),
     body TEXT,
-    points INT
+    points INT DEFAULT 1
 )
 
 CREATE TABLE question_answers (
     id SERIAL PRIMARY KEY,
     question_id INT REFERENCES questions(id),
-    label CHARACTER(1),
     body TEXT,
     correct BOOLEAN
 )

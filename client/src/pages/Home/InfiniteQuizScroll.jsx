@@ -20,6 +20,11 @@ const InfiniteQuizScroll = (props) => {
             hasMore={false}
             next={()=>{}}
             loader={<h4>Loading...</h4>}
+            endMessage={
+                <p className="text-center m-10 uppercase tracking-wide text-gray-500 font-semibold">
+                    There are no more quizzes T_T
+                </p>
+            }
         >
             {items.map((i, index) => (
                 <QuizCard key={index} item={i}></QuizCard>
