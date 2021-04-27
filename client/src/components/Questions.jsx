@@ -1,3 +1,4 @@
+import EditableQuestionCard from "./EditableQuestionCard"
 import QuestionCard from "./QuestionCard"
 
 const Questions = (props) => {
@@ -15,8 +16,12 @@ const Questions = (props) => {
     }]
     return (
         <div>
-            {items.map((i, index) => (
-                <QuestionCard key={index} number={index} item={i}></QuestionCard>
+            {props.editable ? 
+            items.map((i, index) => (
+                <EditableQuestionCard key={index} number={index} item={i} />
+            ))
+            :items.map((i, index) => (
+                <QuestionCard key={index} number={index} item={i} />
             ))}
         </div>
     )
