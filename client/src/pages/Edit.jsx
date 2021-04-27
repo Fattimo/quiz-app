@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 import fetch from 'isomorphic-unfetch'
 
-import Questions from './QuizView/Questions'
+import Questions from '../components/Questions'
 
 function EditPage() {
     useEffect(()=> {

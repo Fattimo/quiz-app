@@ -2,13 +2,11 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from 'react-router-dom'
-import EditPage from './pages/Edit';
-import Home from './pages/Home'
-import Nav from './pages/Nav';
-import Quiz from './pages/QuizView';
+import Edit from './pages/Edit';
+import Nav from './components/Nav';
+import Quiz from './pages/Quizzes';
 
 function App() {
   return (
@@ -18,7 +16,7 @@ function App() {
 
         <Switch>
           <Route path="/edit">
-            <EditPage/>
+            <Edit/>
           </Route>
           <Route path="/quizzes">
             <Quiz />

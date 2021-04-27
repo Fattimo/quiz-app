@@ -4,8 +4,10 @@ import { useState } from "react"
 /* This example requires Tailwind CSS v2.0+ */
 export default function Nav() {
     const navigation = [
+        { name: 'All Quizzes', href: '/quizzes' },
         { name: 'Make Quiz', href: '#' },
         { name: 'Liked Quizzes', href: '#' },
+        { name: 'Source Code', href: 'https://github.com/Fattimo/quiz-app', target: "_blank" },
       ]
 
     const [dropdown, setDropdown] = useState(false);
@@ -49,7 +51,7 @@ export default function Nav() {
                 <div>
                     <button type="button" className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                     <span className="sr-only">Open user menu</span>
-                    <a href="#" className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Profile</a>
+                    <a href="#" className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Profile (Unimplemented)</a>
                     </button>
                 </div>
                 </div>
@@ -70,10 +72,10 @@ export default function Nav() {
 }
 
 const MobileLink = (props) => (
-    <a href={props.item.href} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{props.item.name}</a>
+    <a href={props.item.href} target={props.item.target} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{props.item.name}</a>
 )
 
 const DashLink = (props) => (
-    <a href={props.item.href} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{props.item.name}</a>
+    <a href={props.item.href} target={props.item.target} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{props.item.name}</a>
 )
 
