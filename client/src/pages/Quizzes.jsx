@@ -7,6 +7,7 @@ import {
 
 import Home from './Home'
 import QuizView from '../components/QuizView'
+import QuizContainer from '../containers/QuizContainer'
 
 function Quizzes() {  
     let match = useRouteMatch();
@@ -28,7 +29,9 @@ function Quizzes() {
 function Quiz() {
     let { topicId } = useParams();
     return (
-      <QuizView topicId={topicId} />
+      <QuizContainer.Provider>
+        <QuizView topicId={topicId} />
+      </QuizContainer.Provider>
     );
 }
 

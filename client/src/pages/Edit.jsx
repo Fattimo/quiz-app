@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom'
 import fetch from 'isomorphic-unfetch'
 
-import Questions from '../components/Questions'
 import EditableQuizView from '../components/EditableQuizView'
 
 function EditPage() {

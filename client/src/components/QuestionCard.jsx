@@ -1,5 +1,11 @@
+import { useState } from "react"
+
 const QuestionCard = (props) => {
-    console.log(props)
+    const [value, setValue] = useState(props.response)
+    const handleChange = responseId => e => {
+        setValue(e.target.id)
+        props.handleChoice(props.item.id, responseId)
+    }
     //query to get answer choices:
     const choices = [
         {
@@ -38,7 +44,12 @@ const QuestionCard = (props) => {
                         <div className="px-4 bg-white space-y-6 sm:px-6">
                             <div className="mt-4 space-y-4">
                                 {choices.map(item => (
-                                    <AnswerRow item={item}/>
+                                    <AnswerRow 
+                                        key={item.id} 
+                                        item={item}
+                                        handleChange={handleChange}
+                                        value={value}
+                                    />
                                 ))}
                             </div>
                         </div>
@@ -52,8 +63,15 @@ const QuestionCard = (props) => {
 
 const AnswerRow = (props) => (
     <div className="flex items-center">
-    <input id={props.item.id} name="push_notifications" type="radio" className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"/>
-    <label for={props.item.id} className="ml-3 block text-sm font-medium text-gray-700">
+    <input 
+        id={props.item.id} 
+        checked={props.value === props.item.id}
+        onChange={props.handleChange(props.item.id)} 
+        name="push_notifications" 
+        type="radio" 
+        className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+    />
+    <label htmlFor={props.item.id} className="ml-3 block text-sm font-medium text-gray-700">
         {props.item.body}
     </label>
     </div>

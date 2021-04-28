@@ -18,14 +18,14 @@ CREATE TABLE questions (
     id SERIAL PRIMARY KEY,
     quiz_id INT REFERENCES quizzes(id),
     body TEXT,
-    points INT DEFAULT 1
+    points INT DEFAULT 1,
+    correct INT REFERENCES question_answers(id)
 )
 
 CREATE TABLE question_answers (
     id SERIAL PRIMARY KEY,
     question_id INT REFERENCES questions(id),
-    body TEXT,
-    correct BOOLEAN
+    body TEXT
 )
 
 CREATE TABLE question_response (

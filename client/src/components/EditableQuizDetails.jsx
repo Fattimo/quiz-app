@@ -49,7 +49,7 @@ const EditableQuizDetails = (props) => {
                     <img className="h-48 object-cover w-48 transform scale-110" src="https://cdn5.vectorstock.com/i/1000x1000/51/14/camera-icon-on-white-background-vector-17685114.jpg" alt="CCamera" />
                     </div>
                 </div>
-                <div className="flex flex-col w-60 sm:w-72 md:w-96 items-start">
+                <div className="flex flex-col w-60 sm:w-72 md:w-96 items-start items-center text-center md:text-left md:items-start">
                     <h2 className="pl-1 text-base text-indigo-600 font-semibold tracking-wide uppercase text-left">Editing: </h2>
                     <ContentEditable 
                         className="p-1 mt-2 w-full break-words text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
@@ -63,14 +63,14 @@ const EditableQuizDetails = (props) => {
                     />
                 </div>
             </div>
-            <div className="text-center flex lg:flex-col flex-row content-around justify-around w-full lg:h-40 lg:w-auto">
-                <div className={`w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
+            <div className="text-center flex lg:flex-col flex-col md:flex-row content-around justify-around items-center md:w-9/12 h-36 lg:h-40 md:h-auto lg:w-auto">
+                <div className={`lg:w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
                     Theme: <Dropdown show={showTheme} toggle={toggleTheme} setter={setTheme} selection={theme} options={COLORS} decorator={true} width="24"/>
                 </div>
-                <div className={`w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
+                <div className={`lg:w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
                     Difficulty: <Dropdown show={showDifficulty} toggle={toggleDifficulty} setter={setDifficulty} selection={difficulty} options={DIFFICULTIES} width="24"/>
                 </div>
-                <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase text-left">XX Questions</h2>
+                <h2 className="text-base whitespace-nowrap text-indigo-600 font-semibold tracking-wide uppercase text-left">XX Questions</h2>
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ const Dropdown = (props) => {
         props.setter(selection)
     }
     return (
-        <div className="relative inline-block text-left">
+        <div className="relative inline-block text-left mx-3">
             <div className="flex justify-between">
                 <button type="button" onClick={props.toggle} className={`inline-flex justify-end rounded-md w-${props.width || "auto"} border border-gray-300 shadow-sm px-2 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-${props.decorator ? props.selection : 'indigo'}-500 capitalize`} id="menu-button" aria-expanded="true" aria-haspopup="true">
                     <div className="flex justify-end items-center">
