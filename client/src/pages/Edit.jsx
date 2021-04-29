@@ -9,6 +9,7 @@ import {
 import fetch from 'isomorphic-unfetch'
 
 import EditableQuizView from '../components/EditableQuizView'
+import EditQuizContainer from '../containers/EditQuizContainer'
 
 function EditPage() {
     useEffect(()=> {
@@ -38,8 +39,38 @@ function EditPage() {
   
 function Quiz() {
     let { quizId } = useParams();
+
+    //query to get answer choices:
+    const items = [{
+      id: "123",
+      body: "test",
+      points: 10,
+      correct: 123,
+      responses: {
+          123: "125",
+          223: "1",
+          313: "true"
+      }
+  },
+  {
+      id: "456",
+      body: "test",
+      points: 10,
+      correct: 123,
+      responses: {
+          123: "125",
+          223: "1",
+          313: "true"
+      }
+  }]
+
     return (
-      <EditableQuizView quizId={quizId}/>
+      <EditQuizContainer.Provider 
+      initialState={{
+        initialQuestions: items
+      }}>
+        <EditableQuizView quizId={quizId}/>
+      </EditQuizContainer.Provider>
     );
 }
 

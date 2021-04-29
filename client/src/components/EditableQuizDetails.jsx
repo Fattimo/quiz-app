@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import ContentEditable from "react-contenteditable"
 
 import Dropdown from "./Dropdown"
@@ -7,10 +7,14 @@ const EditableQuizDetails = (props) => {
     const COLORS = ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink']
     const DIFFICULTIES = ['easy', 'medium', 'hard']
     //TODO: replace with database equivalents
-    const [theme, setTheme] = useState('indigo')
-    const [difficulty, setDifficulty] = useState('medium')
+    const [theme, setTheme] = props.states.color
+    const [difficulty, setDifficulty] = props.states.difficulty
     const [showTheme, setShowTheme] = useState(false)
     const [showDifficulty, setShowDifficulty] = useState(false)
+
+    const [title, handleTitleChange] = props.states.title
+    const [description, handleDescriptionChange] = props.states.description
+    
 
     const toggleTheme = () => {
         if (showTheme) {
@@ -34,12 +38,6 @@ const EditableQuizDetails = (props) => {
         }
     }
 
-    const title = useRef('test')
-    const description = useRef('descirption')
-    const handleChange = property => e => {
-        property.current = e.target.value
-    }
-
     return (
         <div className="pb-12 bg-white flex flex-col lg:flex-row items-center max-w-5xl xl:max-w-6xl 2xl:max-2-7xl mx-auto px-8 sm:px-20 lg:px-24 justify-center">
             <div className="flex flex-col items-center md:flex-row mb-10 sm:mb-5 md:mr-4">
@@ -54,12 +52,12 @@ const EditableQuizDetails = (props) => {
                     <ContentEditable 
                         className="p-1 mt-2 w-full break-words text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
                         html={title.current}
-                        onChange={handleChange(title)}
+                        onChange={handleTitleChange}
                     />
                     <ContentEditable 
                         className="mt-2 text-xl text-gray-700 w-full p-1 break-words"
                         html={description.current}
-                        onChange={handleChange(description)}
+                        onChange={handleDescriptionChange}
                     />
                 </div>
             </div>

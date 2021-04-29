@@ -1,19 +1,8 @@
-import { useEffect, useState } from "react"
-import fetch from 'isomorphic-unfetch'
-
 import QuizDetails from "./QuizDetails"
 import QuestionCard from "./QuestionCard"
 import QuizContainer from "../containers/QuizContainer"
 
 const QuizView = (props) => {
-    useEffect(()=> {
-        fetch('/api/hello', { method: "GET" })
-          .then(res => res.json()
-          .then(r => setState(r))
-        )
-    }, [])
-    
-    const [state, setState] = useState('')
     const quiz = QuizContainer.useContainer()
 
     const submitQuiz = () => {
