@@ -60,7 +60,7 @@ const useEditQuizDetailsContainer = ({
             }
         }
         labeler.current-=2
-        return id
+        return [id, questions[id]]
     }
 
     const removeQuestion = (questionId) => {

@@ -61,12 +61,12 @@ const EditableQuizDetails = (props) => {
                     />
                 </div>
             </div>
-            <div className="text-center flex lg:flex-col flex-col md:flex-row content-around justify-around items-center md:w-9/12 h-36 lg:h-40 md:h-auto lg:w-auto">
+            <div className="text-center flex lg:flex-col flex-col md:flex-row content-around justify-around items-center lg:items-start md:w-9/12 h-36 lg:h-40 md:h-auto lg:w-auto">
                 <div className={`lg:w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
-                    Theme: <Dropdown show={showTheme} toggle={toggleTheme} setter={setTheme} selection={theme} options={COLORS} decorator={true} width="24"/>
+                    Theme: <Dropdown show={showTheme} toggle={toggleTheme} setter={setTheme} selection={theme} options={COLORS} decorator={true}/>
                 </div>
                 <div className={`lg:w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
-                    Difficulty: <Dropdown show={showDifficulty} toggle={toggleDifficulty} setter={setDifficulty} selection={difficulty} options={DIFFICULTIES} width="24"/>
+                    Difficulty: <Dropdown show={showDifficulty} toggle={toggleDifficulty} setter={setDifficulty} selection={difficulty} options={DIFFICULTIES}/>
                 </div>
                 <h2 className="text-base whitespace-nowrap text-indigo-600 font-semibold tracking-wide uppercase text-left">XX Questions</h2>
             </div>
