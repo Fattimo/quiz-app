@@ -40,8 +40,8 @@ const useEditQuizDetailsContainer = ({
         }
         questions[question.id]= {
             body: useRef(question.body),
-            points: useRef(question.points),
-            correct: useRef(question.correct),
+            points: useState(question.points),
+            correct: useState(question.correct),
             responses: referencedResponses
         }
     }
@@ -53,8 +53,8 @@ const useEditQuizDetailsContainer = ({
         const id = labeler.current
         questions[id] = {
             body: useRef("new question"),
-            points: useRef(1),
-            correct: useRef(labeler.current-1),
+            points: useState(1),
+            correct: useState(labeler.current-1),
             responses: {
                 [id-1]: useRef("new response")
             }
@@ -76,20 +76,24 @@ const useEditQuizDetailsContainer = ({
         delete questions[questionId]
     }
 
-    const editQuestionProperty = (property, questionId) => value => {
-        questions[questionId][property].current = value
+    const editQuestionPropertyRef = (property, questionId) => e => {
+        questions[questionId][property].current = e.target.value
     }
 
-    const editResponse = questionId => responseId => value => {
-        questions[questionId].responses[responseId].current = value
+    const getQuestionPropertyState = (property, questionId)  => {
+        return questions[questionId][property]
     }
 
-    const editors = (questionId) => {
+    const editResponse = (questionId, responseId) => e => {
+        questions[questionId].responses[responseId].current = e.target.value
+    }
+
+    const questionStates = (questionId) => {
         return {
-            body: editQuestionProperty("body", questionId),
-            points: editQuestionProperty("points", questionId),
-            correct: editQuestionProperty("correct", questionId),
-            response: editResponse(questionId)
+            body: [questions[questionId]["body"].current, editQuestionPropertyRef("body", questionId)],
+            points: getQuestionPropertyState("points", questionId),
+            correct: getQuestionPropertyState("correct", questionId),
+            response: (responseId) => [questions[questionId].responses[responseId].current ,editResponse(questionId, responseId)]
         }
     }
 
@@ -114,7 +118,7 @@ const useEditQuizDetailsContainer = ({
             color, 
             difficulty
         },
-        editors,
+        questionStates,
         useQuestionCreator,
         removeQuestion,
         useResponseCreator,

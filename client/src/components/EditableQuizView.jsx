@@ -24,7 +24,7 @@ const EditableQuizView = (props) => {
                     key={id} 
                     number={index} 
                     item={{id, ...item}} 
-                    editors={quiz.editors(id)}
+                    states={quiz.questionStates(id)}
                 />
             ))}
             <div className="px-4 pt-3 text-center sm:px-6">

@@ -49,18 +49,18 @@ function Quiz() {
       responses: {
           123: "125",
           223: "1",
-          313: "true"
+          313: "not a boolean what"
       }
   },
   {
       id: "456",
-      body: "test",
+      body: "test data num 2",
       points: 10,
-      correct: 123,
+      correct: 313,
       responses: {
           123: "125",
           223: "1",
-          313: "true"
+          313: "trsewggerwe"
       }
   }]
 

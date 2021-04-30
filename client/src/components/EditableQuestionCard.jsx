@@ -6,18 +6,13 @@ const EditableQuestionCard = (props) => {
     const question = props.item
 
     const POINTS = [1,2,3,4,5,6,7,8,9,10]
-    const [points, setPoints] = useState(question.points.current || 1)
-    const pointSetter = value => {
-        console.log(value)
-        setPoints(value)
-        props.editors.points(value)
-    }
+    const [points, setPoints] = props.states.points
+    
     const [showPoints, setShowPoints] = useState(false)
     const toggleShowPoints = () => setShowPoints(!showPoints)
     
-
-    const body = question.body //replace with body passed thru props
-    const handleBodyChange = e => props.editors.body(e.target.value)
+    const [body, handleBodyChange]  = props.states.body //replace with body passed thru props
+    
     //TODO: change push notifications to be question id
     return (
         <div className="max-w-md mb-5 mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
@@ -32,7 +27,7 @@ const EditableQuestionCard = (props) => {
                                     <Dropdown 
                                         show={showPoints} 
                                         toggle={toggleShowPoints} 
-                                        setter={pointSetter} 
+                                        setter={setPoints} 
                                         selection={points} 
                                         options={POINTS}
                                     />
@@ -41,15 +36,14 @@ const EditableQuestionCard = (props) => {
                             </div>
                             <ContentEditable 
                                 className="text-gray-500 mt-2"
-                                html={body.current}
+                                html={body}
                                 onChange={handleBodyChange}
                             />
                         </div>
                         <AnswerChoices 
-                            choices={question.responses}
-                            correct={question.correct}
-                            setCorrect={props.editors.correct}
-                            setResponseBody={props.editors.response}
+                            responseIds={Object.keys(question.responses)}
+                            correctState={props.states.correct}
+                            makeResponseState={props.states.response}
                         />
                         </fieldset>
                     </form>
@@ -60,23 +54,20 @@ const EditableQuestionCard = (props) => {
 }
 
 const AnswerChoices = (props) => {
-    const [correctId, setCorrectId] = useState(props.correct.current)
-    const responses = Object.entries(props.choices)
+    const [correctId, setCorrectId] = props.correctState
     const handleCorrectResponseChange = id => e => {
-        props.setCorrect(id)
         setCorrectId(id)
     }
     return (
         <div className="px-4 bg-white space-y-6 sm:px-6">
             <div className="mt-4 space-y-4">
-                {responses.map(([id, body]) => (
+                {props.responseIds.map((id) => (
                     <AnswerRow 
                         key={id} 
-                        id={id}
-                        body={body} 
+                        id={parseInt(id)}
                         correctId={correctId} 
-                        handleChange={handleCorrectResponseChange(id)}
-                        setBody={props.setResponseBody(id)}
+                        handleChange={handleCorrectResponseChange(parseInt(id))}
+                        bodyState={props.makeResponseState(id)}
                     />
                 ))}
             </div>
@@ -85,8 +76,7 @@ const AnswerChoices = (props) => {
 }
 
 const AnswerRow = (props) => {
-    const body = props.body
-    const handleBodyChange = (e) => props.setBody(e.target.value)
+    const [body, handleBodyChange] = props.bodyState
     return (
     <div className="flex items-center">
     <input 
@@ -99,7 +89,7 @@ const AnswerRow = (props) => {
     />
     <ContentEditable
         className="ml-3 block text-sm font-medium text-gray-700 px-2"
-        html={body.current}
+        html={body}
         onChange={handleBodyChange}
     />
     </div>
