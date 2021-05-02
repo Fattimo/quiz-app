@@ -4,31 +4,33 @@ import QuizContainer from "../containers/QuizContainer"
 
 const QuizView = (props) => {
     const quiz = QuizContainer.useContainer()
+    const questions = props.questions
 
     const submitQuiz = () => {
-        // take all of the keys of answers (questions) & query for the questions where 
-        // its correct answer id matches the id of the value
+        const questionMap = {}
+        let points = 0.0
+        for (const question of questions) {
+            questionMap[question.id] = question
+            points += question.points
+        }
+        let score = 0.0
+        for (const ans in quiz.answers) {
+            const answer = quiz.answers[ans]
+            if (answer === questionMap[ans].correct) {
+                score += questionMap[ans].points
+            }
+        }
+        console.log(points)
+        console.log(score)
+        console.log(score/points)
         console.log(quiz.answers)
     }
 
-    const items = [{
-        id: "123",
-        title: "test",
-        last_updated: new Date(10000),
-        quiz_difficulty: "hard"
-    },
-    {
-        id: "456",
-        title: "test2",
-        last_updated: new Date(10000),
-        quiz_difficulty: "easy"
-    }]
-
     return (
-        <div>
+        <div className="pb-8">
             <h3>Requested topic ID: {props.topicId}</h3>
             <QuizDetails />
-            {items.map((i, index) => (
+            {questions.map((i, index) => (
                 <QuestionCard 
                     key={index} 
                     number={index} 

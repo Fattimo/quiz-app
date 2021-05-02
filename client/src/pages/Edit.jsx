@@ -10,6 +10,7 @@ import fetch from 'isomorphic-unfetch'
 
 import EditableQuizView from '../components/EditableQuizView'
 import EditQuizContainer from '../containers/EditQuizContainer'
+import { getAllQuestions } from '../services/http'
 
 function EditPage() {
     useEffect(()=> {
@@ -41,28 +42,7 @@ function Quiz() {
     let { quizId } = useParams();
 
     //query to get answer choices:
-    const items = [{
-      id: "123",
-      body: "test",
-      points: 10,
-      correct: 123,
-      responses: {
-          123: "125",
-          223: "1",
-          313: "not a boolean what"
-      }
-  },
-  {
-      id: "456",
-      body: "test data num 2",
-      points: 10,
-      correct: 313,
-      responses: {
-          123: "125",
-          223: "1",
-          313: "trsewggerwe"
-      }
-  }]
+    const items = getAllQuestions()
 
     return (
       <EditQuizContainer.Provider 

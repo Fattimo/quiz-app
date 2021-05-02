@@ -3,13 +3,13 @@ import QuizCard from "./QuizCard"
 
 const InfiniteQuizScroll = (props) => {
     const items = [{
-        id: "123",
+        id: -123,
         title: "test",
         last_updated: new Date(10000),
         quiz_difficulty: "hard"
     },
     {
-        id: "456",
+        id: -456,
         title: "test2",
         last_updated: new Date(10000),
         quiz_difficulty: "easy"

@@ -1,17 +1,24 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Dropdown from "./Dropdown"
 import ContentEditable from "react-contenteditable"
 
 const EditableQuestionCard = (props) => {
     const question = props.item
 
+    const [responses, setResponses] = useState(Object.keys(question.responses))
+    const handleAddResponse = () => {
+        props.addResponse()
+        setResponses(Object.keys(question.responses))
+    }
+
     const POINTS = [1,2,3,4,5,6,7,8,9,10]
-    const [points, setPoints] = props.states.points
-    
+    const [points, setPointsState] = useState(props.getters.points)
+    const setPoints = (value) => setPointsState(props.setters.points(value))
     const [showPoints, setShowPoints] = useState(false)
     const toggleShowPoints = () => setShowPoints(!showPoints)
     
-    const [body, handleBodyChange]  = props.states.body //replace with body passed thru props
+    const body  = useRef(props.getters.body)
+    const handleBodyChange = (e) => body.current = props.setters.body(e.target.value)
     
     //TODO: change push notifications to be question id
     return (
@@ -36,14 +43,17 @@ const EditableQuestionCard = (props) => {
                             </div>
                             <ContentEditable 
                                 className="text-gray-500 mt-2"
-                                html={body}
+                                html={body.current}
                                 onChange={handleBodyChange}
                             />
                         </div>
                         <AnswerChoices 
-                            responseIds={Object.keys(question.responses)}
-                            correctState={props.states.correct}
-                            makeResponseState={props.states.response}
+                            responseIds={responses}
+                            correct={props.getters.correct}
+                            setCorrect={props.setters.correct}
+                            response={props.getters.response}
+                            setResponse={props.setters.response}
+                            addResponse={handleAddResponse}
                         />
                         </fieldset>
                     </form>
@@ -54,9 +64,9 @@ const EditableQuestionCard = (props) => {
 }
 
 const AnswerChoices = (props) => {
-    const [correctId, setCorrectId] = props.correctState
+    const [correctId, setCorrectId] = useState(props.correct)
     const handleCorrectResponseChange = id => e => {
-        setCorrectId(id)
+        setCorrectId(props.setCorrect(id))
     }
     return (
         <div className="px-4 bg-white space-y-6 sm:px-6">
@@ -67,20 +77,22 @@ const AnswerChoices = (props) => {
                         id={parseInt(id)}
                         correctId={correctId} 
                         handleChange={handleCorrectResponseChange(parseInt(id))}
-                        bodyState={props.makeResponseState(id)}
+                        body={props.response(id)}
+                        setBody={props.setResponse(id)}
                     />
                 ))}
-                <div className="flex cursor-pointer items-center w-full text-gray-300 hover:text-indigo-600 hover:animate-pulse duration-300">
+                {props.responseIds.length < 5 ? <div onClick={props.addResponse} className="flex cursor-pointer items-center w-full text-gray-300 hover:text-indigo-600 hover:animate-pulse duration-300">
                 <svg className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
                 <div className="flex-grow ml-3 bg-current px-2 w-11/12 h-4 rounded"></div>
-                </div>
+                </div>: ""}
             </div>
         </div>
     )
 }
 
 const AnswerRow = (props) => {
-    const [body, handleBodyChange] = props.bodyState
+    const body = useRef(props.body)
+    const handleBodyChange = e => body.current = props.setBody(e.target.value)
     return (
     <div className="flex items-center">
     <input 
@@ -93,7 +105,7 @@ const AnswerRow = (props) => {
     />
     <ContentEditable
         className="ml-3 block text-sm font-medium text-gray-700 px-2 w-11/12 flex-grow break-words"
-        html={body}
+        html={body.current}
         onChange={handleBodyChange}
     />
     </div>

@@ -5,7 +5,7 @@ const useQuizContainer = () => {
     const [answers, setAnswers] = useState({})
 
     const makeAnswer = (questionId, responseId) => {
-        setAnswers({...answers, [questionId]: responseId})
+        setAnswers({...answers, [questionId]: parseInt(responseId)})
     }
     
     return {

@@ -68,7 +68,7 @@ const EditableQuizDetails = (props) => {
                 <div className={`lg:w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
                     Difficulty: <Dropdown show={showDifficulty} toggle={toggleDifficulty} setter={setDifficulty} selection={difficulty} options={DIFFICULTIES}/>
                 </div>
-                <h2 className="text-base whitespace-nowrap text-indigo-600 font-semibold tracking-wide uppercase text-left">XX Questions</h2>
+                <h2 className="text-base whitespace-nowrap text-indigo-600 font-semibold tracking-wide uppercase text-left">{props.numQuestions} Questions</h2>
             </div>
         </div>
     )

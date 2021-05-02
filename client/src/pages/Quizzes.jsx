@@ -8,6 +8,7 @@ import {
 import Home from './Home'
 import QuizView from '../components/QuizView'
 import QuizContainer from '../containers/QuizContainer'
+import { getAllQuestions } from '../services/http'
 
 function Quizzes() {  
     let match = useRouteMatch();
@@ -28,9 +29,12 @@ function Quizzes() {
   
 function Quiz() {
     let { topicId } = useParams();
+
+    const items = getAllQuestions()
+
     return (
       <QuizContainer.Provider>
-        <QuizView topicId={topicId} />
+        <QuizView topicId={topicId} questions={items}/>
       </QuizContainer.Provider>
     );
 }

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useRef } from 'react'
 import { createContainer } from 'unstated-next'
 
@@ -36,12 +35,12 @@ const useEditQuizDetailsContainer = ({
     for(const question of initialQuestions) {
         const referencedResponses = {}
         for (const responseId in question.responses) {
-            referencedResponses[responseId] = useRef(question.responses[responseId])
+            referencedResponses[responseId] = question.responses[responseId]
         }
         questions[question.id]= {
-            body: useRef(question.body),
-            points: useState(question.points),
-            correct: useState(question.correct),
+            body: question.body,
+            points: question.points,
+            correct: question.correct,
             responses: referencedResponses
         }
     }
@@ -49,14 +48,14 @@ const useEditQuizDetailsContainer = ({
     const removedQuestions = []
     const removedResponses = []
 
-    const useQuestionCreator = () => {
+    const addQuestion = () => {
         const id = labeler.current
         questions[id] = {
-            body: useRef("new question"),
-            points: useState(1),
-            correct: useState(labeler.current-1),
+            body: "new question",
+            points: 1,
+            correct: labeler.current-1,
             responses: {
-                [id-1]: useRef("new response")
+                [id-1]: "new response"
             }
         }
         labeler.current-=2
@@ -74,32 +73,48 @@ const useEditQuizDetailsContainer = ({
             }
         }
         delete questions[questionId]
+        return questionId
     }
 
-    const editQuestionPropertyRef = (property, questionId) => e => {
-        questions[questionId][property].current = e.target.value
-    }
-
-    const getQuestionPropertyState = (property, questionId)  => {
+    const getQuestionProperty = (property, questionId)  => {
         return questions[questionId][property]
     }
 
-    const editResponse = (questionId, responseId) => e => {
-        questions[questionId].responses[responseId].current = e.target.value
+    const editQuestionProperty = (property, questionId) => value => {
+        questions[questionId][property] = value
+        return value
     }
 
-    const questionStates = (questionId) => {
+    const getResponse = (questionId, responseId)  => {
+        return questions[questionId].responses[responseId]
+    }
+
+    const editResponse = (questionId, responseId) => value => {
+        questions[questionId].responses[responseId] = value
+        return value
+    }
+
+    const questionPropertyGetters = (questionId) => {
         return {
-            body: [questions[questionId]["body"].current, editQuestionPropertyRef("body", questionId)],
-            points: getQuestionPropertyState("points", questionId),
-            correct: getQuestionPropertyState("correct", questionId),
-            response: (responseId) => [questions[questionId].responses[responseId].current ,editResponse(questionId, responseId)]
+            body: getQuestionProperty("body", questionId),
+            points: getQuestionProperty("points", questionId),
+            correct: getQuestionProperty("correct", questionId),
+            response: (responseId) => getResponse(questionId, responseId)
+        }
+    }
+
+    const questionPropertySetters = (questionId) => {
+        return {
+            body: editQuestionProperty("body", questionId),
+            points: editQuestionProperty("points", questionId),
+            correct: editQuestionProperty("correct", questionId),
+            response: (responseId) => editResponse(questionId, responseId)
         }
     }
 
     // Responses
-    const useResponseCreator = (questionId) => {
-        questions[questionId].responses[labeler.current] = useRef("new response")
+    const addResponse = (questionId) => () => {
+        questions[questionId].responses[labeler.current] = "new response"
         return labeler.current--
     }
 
@@ -108,6 +123,11 @@ const useEditQuizDetailsContainer = ({
             removedResponses.push(responseId)
         }
         delete questions[questionId].responses[responseId]
+        return responseId
+    }
+
+    const getQuestions = () => {
+        return questions
     }
 
     
@@ -118,12 +138,13 @@ const useEditQuizDetailsContainer = ({
             color, 
             difficulty
         },
-        questionStates,
-        useQuestionCreator,
+        questionPropertyGetters,
+        questionPropertySetters,
+        addQuestion,
         removeQuestion,
-        useResponseCreator,
+        addResponse,
         removeResponse,
-        questions,
+        questions: getQuestions(),
         removedQuestions,
         removedResponses
     }
