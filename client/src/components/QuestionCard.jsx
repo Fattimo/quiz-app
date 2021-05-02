@@ -7,7 +7,6 @@ const QuestionCard = (props) => {
         props.handleChoice(props.item.id, responseId)
     }
     
-    //TODO: change push notifications to be question id
     return (
         <div className="max-w-md mb-5 mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
             <div className="md:flex">
@@ -26,7 +25,9 @@ const QuestionCard = (props) => {
                                 {Object.keys(props.item.responses).map(id => (
                                     <AnswerRow 
                                         key={id}
-                                        id={id} 
+                                        id={id}
+                                        correctId={props.item.correct}
+                                        submitted={props.submitted}
                                         body={props.item.responses[id]}
                                         handleChange={handleChange}
                                         value={value}
@@ -48,11 +49,18 @@ const AnswerRow = (props) => (
         id={props.id} 
         checked={props.value === props.id}
         onChange={props.handleChange(props.id)} 
-        name="push_notifications" 
+        name={props.id} 
         type="radio" 
-        className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+        disabled={props.submitted}
+        className={props.submitted ? 
+            "focus:ring-indigo-400 h-4 w-4 text-indigo-400 border-gray-300":
+            "focus:ring-indigo-500 h-4 w-4 text-indigo-500 border-gray-300"
+        }
     />
-    <label htmlFor={props.id} className="ml-3 block text-sm font-medium text-gray-700">
+    <label htmlFor={props.id} className={props.submitted ? 
+        `ml-3 block text-sm font-medium ${parseInt(props.id) === props.correctId ? "text-green-600" : "line-through text-gray-400"}`:
+        "ml-3 block text-sm font-medium text-gray-700"}
+    >
         {props.body}
     </label>
     </div>
