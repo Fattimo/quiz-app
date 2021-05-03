@@ -1,0 +1,21 @@
+{
+  "name": "quiz-app",
+  "version": "1.0.0",
+  "description": "Udemy Web App Coding Challenge\r ==============================",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd server && npm run start",
+    "heroku-postbuild": "cd client && yarn && yarn run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fattimo/quiz-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fattimo/quiz-app/issues"
+  },
+  "homepage": "https://github.com/Fattimo/quiz-app#readme"
+}
