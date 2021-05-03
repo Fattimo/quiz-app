@@ -1,6 +1,7 @@
 import LikeButton from "./LikeButton"
 
 const QuizDetails = (props) => {
+    const header = props.details
     return (
         <div className="pb-12 bg-white flex flex-col items-center">
             <div className="md:flex-shrink-0 mb-5">
@@ -9,17 +10,16 @@ const QuizDetails = (props) => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center flex flex-col items-center">
                     <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
-                        XX Questions, Difficulty&nbsp;&nbsp;|&nbsp;&nbsp;Highest Score: $$%
+                        {header.num_questions} Questions, {header.difficulty}&nbsp;&nbsp;|&nbsp;&nbsp;Highest Score: $$%
                     </h2>
                     <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                        Some Title Here
+                        {header.title}
                     </p>
                     <p className="mt-4 max-w-2xl text-xl text-gray-700 lg:mx-auto">
-                        Description Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
-                        accusamus quisquam.
+                        {header.body}
                     </p>
                     <p className="max-w-2xl text-s text-gray-400 lg:mx-auto my-3">
-                        Created By Author, Updated XX-XX-XXXX
+                        Created By Anonymous, Updated {new Date(header.last_updated).toDateString()}
                     </p>
                     <LikeButton liked={true} tag={true}/>
                 </div>

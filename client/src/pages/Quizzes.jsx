@@ -4,11 +4,12 @@ import {
     Switch,
     Route
 } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 import Home from './Home'
 import QuizView from '../components/QuizView'
 import QuizContainer from '../containers/QuizContainer'
-import { getAllQuestions } from '../services/http'
+import { getAllQuestions, getQuiz, getQuizQuestions } from '../services/http'
 
 function Quizzes() {  
     let match = useRouteMatch();
@@ -29,12 +30,21 @@ function Quizzes() {
   
 function Quiz() {
     let { topicId } = useParams();
+    const [questions, setQuestions] = useState([])
+    const [quiz, setQuiz] = useState({})
 
-    const items = getAllQuestions()
+    useEffect(() => {
+      const fetchData = async () => {
+        const [quizDetails, quizQuestions] = await Promise.all([getQuiz(parseInt(topicId)), getQuizQuestions(parseInt(topicId))])
+        setQuestions(quizQuestions.data)
+        setQuiz(quizDetails.data[0])
+      }
+      fetchData()
+    }, [topicId])
 
     return (
       <QuizContainer.Provider>
-        <QuizView topicId={topicId} questions={items}/>
+        <QuizView topicId={topicId} header={quiz} questions={questions}/>
       </QuizContainer.Provider>
     );
 }

@@ -12,6 +12,7 @@ const QuizView = (props) => {
     const [totPoints, setTotPoints] = useState()
 
     const submitQuiz = () => {
+        console.log(questions)
         if (submitted) return
         setSubmitted(true)
         const questionMap = {}
@@ -23,7 +24,7 @@ const QuizView = (props) => {
         let score = 0.0
         for (const ans in quiz.answers) {
             const answer = quiz.answers[ans]
-            if (answer === questionMap[ans].correct) {
+            if (answer) {
                 score += questionMap[ans].points
             }
         }
@@ -33,7 +34,7 @@ const QuizView = (props) => {
 
     return (
         <div className="pb-8">
-            <QuizDetails />
+            <QuizDetails details={props.header}/>
             <Results points={totPoints} score={score} submitted={submitted}/>
             {questions.map((i, index) => (
                 <QuestionCard 
@@ -62,7 +63,7 @@ const QuizView = (props) => {
 
 const Results = (props) => (
     <p className="text-center uppercase tracking-wide text-indigo-600 font-semibold">
-        Results: {props.submitted ? `${props.points}/${props.score} (${(props.score/props.points * 100).toFixed(2)}%)` : "N/A"}
+        Results: {props.submitted ? `${props.score}/${props.points} (${(props.score/props.points * 100).toFixed(2)}%)` : "N/A"}
     </p>
 )
 

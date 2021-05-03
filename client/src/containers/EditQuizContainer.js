@@ -26,22 +26,37 @@ const useEditQuizDetailsContainer = ({
      * mapping of questionid: {
      * body: desc
      * points: num
-     * correct: id ref resp id
-     * responses {id:body}
+     * 
+     * responses {id:{body: string, correct: boolean}}
      */
     //object storing all of the question data & responses
-    const questions = {}
-    
-    for(const question of initialQuestions) {
-        const referencedResponses = {}
-        for (const responseId in question.responses) {
-            referencedResponses[responseId] = question.responses[responseId]
+    const questions = useRef({})
+
+    const setInitialValues = (header, initQs) => {
+        if (header) {
+            title.current = header.title
+            description.current = header.body
+            color[1](header.color)
+            difficulty[1](header.difficulty)
         }
-        questions[question.id]= {
-            body: question.body,
-            points: question.points,
-            correct: question.correct,
-            responses: referencedResponses
+        if (initQs) {
+            for(const question of initQs) {
+                const referencedResponses = {}
+                let correctId = -1
+                for (const response of question.responses) {
+                    referencedResponses[response.id] = {
+                        body: response.body,
+                        correct: response.correct
+                    }
+                    if (response.correct) correctId = response.id
+                }
+                questions.current[question.id]= {
+                    body: question.body,
+                    points: question.points,
+                    correct: correctId,
+                    responses: referencedResponses
+                }
+            }
         }
     }
 
@@ -50,20 +65,23 @@ const useEditQuizDetailsContainer = ({
 
     const addQuestion = () => {
         const id = labeler.current
-        questions[id] = {
+        questions.current[id] = {
             body: "new question",
             points: 1,
-            correct: labeler.current-1,
+            correct: id-1,
             responses: {
-                [id-1]: "new response"
+                [id-1]: {
+                    body: "new response",
+                    correct: true
+                }
             }
         }
         labeler.current-=2
-        return [id, questions[id]]
+        return [id, questions.current[id]]
     }
 
     const removeQuestion = (questionId) => {
-        const omittedQuestion = questions[questionId]
+        const omittedQuestion = questions.current[questionId]
         if (questionId > 0) {
             removedQuestions.push(questionId)
             for (const responseId in omittedQuestion) {
@@ -72,25 +90,25 @@ const useEditQuizDetailsContainer = ({
                 }
             }
         }
-        delete questions[questionId]
+        delete questions.current[questionId]
         return questionId
     }
 
     const getQuestionProperty = (property, questionId)  => {
-        return questions[questionId][property]
+        return questions.current[questionId][property]
     }
 
     const editQuestionProperty = (property, questionId) => value => {
-        questions[questionId][property] = value
+        questions.current[questionId][property] = value
         return value
     }
 
     const getResponse = (questionId, responseId)  => {
-        return questions[questionId].responses[responseId]
+        return questions.current[questionId].responses[responseId]
     }
 
     const editResponse = (questionId, responseId) => value => {
-        questions[questionId].responses[responseId] = value
+        questions.current[questionId].responses[responseId].body = value
         return value
     }
 
@@ -114,7 +132,10 @@ const useEditQuizDetailsContainer = ({
 
     // Responses
     const addResponse = (questionId) => () => {
-        questions[questionId].responses[labeler.current] = "new response"
+        questions.current[questionId].responses[labeler.current] = {
+            body: "new response",
+            correct: false
+        }
         return labeler.current--
     }
 
@@ -122,12 +143,12 @@ const useEditQuizDetailsContainer = ({
         if (responseId > 0) {
             removedResponses.push(responseId)
         }
-        delete questions[questionId].responses[responseId]
+        delete questions.current[questionId].responses[responseId]
         return responseId
     }
 
     const getQuestions = () => {
-        return questions
+        return questions.current
     }
 
     
@@ -146,7 +167,8 @@ const useEditQuizDetailsContainer = ({
         removeResponse,
         questions: getQuestions(),
         removedQuestions,
-        removedResponses
+        removedResponses,
+        setInitialValues
     }
 }
 

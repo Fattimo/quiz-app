@@ -7,6 +7,7 @@ import {
 import Edit from './pages/Edit';
 import Nav from './components/Nav';
 import Quiz from './pages/Quizzes';
+import About from './pages/About';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
           </Route>
           <Route path="/quizzes">
             <Quiz />
+          </Route>
+          <Route path="/about">
+            <About/>
           </Route>
           <Route path="/">
             <Redirect to="/quizzes" />

@@ -6,22 +6,12 @@ import {
     Route,
     Redirect
 } from 'react-router-dom'
-import fetch from 'isomorphic-unfetch'
 
 import EditableQuizView from '../components/EditableQuizView'
 import EditQuizContainer from '../containers/EditQuizContainer'
-import { getAllQuestions } from '../services/http'
+import { getAllQuestions, getQuiz, getQuizQuestions } from '../services/http'
 
-function EditPage() {
-    useEffect(()=> {
-      fetch('/api/hello', { method: "GET" })
-        .then(res => res.json()
-        .then(r => setState(r))
-      )
-    }, [])
-  
-    const [state, setState] = useState('')
-  
+function EditPage() {  
     let match = useRouteMatch();
   
     return (
@@ -40,16 +30,28 @@ function EditPage() {
   
 function Quiz() {
     let { quizId } = useParams();
+    const [questions, setQuestions] = useState()
+    const [quiz, setQuiz] = useState()
 
-    //query to get answer choices:
-    const items = getAllQuestions()
+    useEffect(() => {
+      if (quizId === "new") {
+        setQuestions(getAllQuestions())
+        return
+      }
+      const fetchData = async () => {
+        const [quizDetails, quizQuestions] = await Promise.all([getQuiz(parseInt(quizId)), getQuizQuestions(parseInt(quizId))])
+        setQuestions(quizQuestions.data)
+        setQuiz(quizDetails.data[0])
+      }
+      fetchData()
+    }, [quizId])
 
     return (
       <EditQuizContainer.Provider 
       initialState={{
-        initialQuestions: items
+        initialQuestions: questions
       }}>
-        <EditableQuizView quizId={quizId}/>
+        <EditableQuizView quizId={quizId} new={quizId==="new"} header={quiz} questions={questions}/>
       </EditQuizContainer.Provider>
     );
 }

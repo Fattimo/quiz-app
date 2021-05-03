@@ -1,23 +1,26 @@
+import { useState } from "react"
+import { Redirect } from "react-router"
+
 const HomeHeader= (props) => {
-    return (
+    const [redirect, setRedirect] = useState(0)
+
+    return redirect ? 
+    <Redirect to={redirect}/>:(
         <div className="flex flex-col items-center">
             <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
             <span className="block inline uppercase tracking-widest text-gray-700">Quiz Thing</span>
             </h1>
             <p className="mt-3 text-center text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl mx-auto md:mt-5 md:text-xl">
-            Tool created by&nbsp;
-            <a className = "text-blue-400 underline" href="https://www.linkedin.com/in/matt-chen-050798192">Matt Chen</a>
-            &nbsp;to make and take multiple choice quizzes! 
-            Created using React, Express, and PostgreSQL (for now).
+            Tool created to make and take multiple choice quizzes! Currently unfinished, but you can create and take quizzes!
             </p>
             <div className="mt-5 sm:mt-8 flex justify-center mb-5">
             <div className="rounded-md shadow w-44 sm:w-52">
-                <a
-                href="#"
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
+                <div
+                onClick={() => setRedirect("/edit/new")}
+                className="w-full cursor-pointer flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
                 >
                 Make a Quiz
-                </a>
+                </div>
             </div>
             <div className="ml-3 w-44 sm:w-52">
                 <a

@@ -2,9 +2,9 @@ import { useState } from "react"
 
 const QuestionCard = (props) => {
     const [value, setValue] = useState(props.response)
-    const handleChange = responseId => e => {
+    const handleChange = correct => e => {
         setValue(e.target.id)
-        props.handleChoice(props.item.id, responseId)
+        props.handleChoice(props.item.id, correct)
     }
     
     return (
@@ -22,15 +22,15 @@ const QuestionCard = (props) => {
                         </div>
                         <div className="px-4 bg-white space-y-6 sm:px-6">
                             <div className="mt-4 space-y-4">
-                                {Object.keys(props.item.responses).map(id => (
+                                {props.item.responses.map(res => (
                                     <AnswerRow 
-                                        key={id}
-                                        id={id}
+                                        key={res.id}
+                                        id={parseInt(res.id)}
                                         correctId={props.item.correct}
                                         submitted={props.submitted}
-                                        body={props.item.responses[id]}
+                                        response={res}
                                         handleChange={handleChange}
-                                        value={value}
+                                        value={parseInt(value)}
                                     />
                                 ))}
                             </div>
@@ -48,7 +48,7 @@ const AnswerRow = (props) => (
     <input 
         id={props.id} 
         checked={props.value === props.id}
-        onChange={props.handleChange(props.id)} 
+        onChange={props.handleChange(props.response.correct)} 
         name={props.id} 
         type="radio" 
         disabled={props.submitted}
@@ -58,10 +58,10 @@ const AnswerRow = (props) => (
         }
     />
     <label htmlFor={props.id} className={props.submitted ? 
-        `ml-3 block text-sm font-medium ${parseInt(props.id) === props.correctId ? "text-green-600" : "line-through text-gray-400"}`:
+        `ml-3 block text-sm font-medium ${props.response.correct ? "text-green-600" : "line-through text-gray-400"}`:
         "ml-3 block text-sm font-medium text-gray-700"}
     >
-        {props.body}
+        {props.response.body}
     </label>
     </div>
 )

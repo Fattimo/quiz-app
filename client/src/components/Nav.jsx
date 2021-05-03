@@ -5,9 +5,10 @@ import { useState } from "react"
 export default function Nav() {
     const navigation = [
         { name: 'All Quizzes', href: '/quizzes' },
-        { name: 'Make Quiz', href: '#' },
+        { name: 'Make Quiz', href: '/edit/new' },
         { name: 'Liked Quizzes', href: '#' },
         { name: 'Source Code', href: 'https://github.com/Fattimo/quiz-app', target: "_blank" },
+        { name: 'About', href: '/about'}
       ]
 
     const [dropdown, setDropdown] = useState(false);
@@ -36,8 +37,10 @@ export default function Nav() {
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 {/*TODO: Replace logo with personal stuff*/}
                 <div className="flex-shrink-0 flex items-center">
-                <img className="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow"/>
-                <img className="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow"/>
+                <img className="block lg:hidden h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
+                <img className="hidden lg:block h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
+                <img className="hidden lg:block h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
+                <img className="hidden lg:block h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                 <div className="flex space-x-4">

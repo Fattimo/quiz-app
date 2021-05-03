@@ -4,8 +4,8 @@ import { createContainer } from 'unstated-next'
 const useQuizContainer = () => {
     const [answers, setAnswers] = useState({})
 
-    const makeAnswer = (questionId, responseId) => {
-        setAnswers({...answers, [questionId]: parseInt(responseId)})
+    const makeAnswer = (questionId, correct) => {
+        setAnswers({...answers, [questionId]: correct})
     }
     
     return {

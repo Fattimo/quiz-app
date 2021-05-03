@@ -75,9 +75,9 @@ const AnswerChoices = (props) => {
                     <AnswerRow 
                         key={id} 
                         id={parseInt(id)}
-                        correctId={correctId} 
+                        correctId={parseInt(correctId)} 
                         handleChange={handleCorrectResponseChange(parseInt(id))}
-                        body={props.response(id)}
+                        body={props.response(id).body}
                         setBody={props.setResponse(id)}
                     />
                 ))}
