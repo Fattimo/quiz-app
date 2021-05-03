@@ -1,7 +1,15 @@
+import LikedQuizzesContainer from "../containers/LikedQuizzesContainer"
 import LikeButton from "./LikeButton"
 
 const QuizDetails = (props) => {
     const header = props.details
+
+    const { toggleQuizLike, isLiked } = LikedQuizzesContainer.useContainer()
+    const handleQuizToggle = () => {
+        console.log(header)
+        toggleQuizLike(header)
+    }
+
     return (
         <div className="pb-12 bg-white flex flex-col items-center">
             <div className="md:flex-shrink-0 mb-5">
@@ -21,7 +29,7 @@ const QuizDetails = (props) => {
                     <p className="max-w-2xl text-s text-gray-400 lg:mx-auto my-3">
                         Created By Anonymous, Updated {new Date(header.last_updated).toDateString()}
                     </p>
-                    <LikeButton liked={true} tag={true}/>
+                    <LikeButton liked={isLiked(header.id)} tag="long" likes={header.likes} toggle={handleQuizToggle}/>
                 </div>
             </div>
         </div>

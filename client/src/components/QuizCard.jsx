@@ -11,7 +11,7 @@ const QuizCard = (props) => {
                 <div className="p-6 w-full flex flex-col">
                     <div className="flex justify-between uppercase tracking-wide text-sm text-indigo-500 font-semibold">
                         <div>{props.item.num_questions || "0"} Questions, {props.item.difficulty}</div>
-                        <LikeButton liked={false} tag={false} size={22}/>
+                        <LikeButton liked={props.isLiked} tag={"number"} size={22} likes={props.item.likes} toggle={props.toggleLike}/>
                     </div>
                     <div className="flex items-center mt-1 ">
                         <Link to={`/quizzes/${props.item.id}`} className="table mr-1 text-lg leading-tight font-medium text-black hover:underline">{props.item.title}</Link>

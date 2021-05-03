@@ -23,12 +23,12 @@ const HomeHeader= (props) => {
                 </div>
             </div>
             <div className="ml-3 w-44 sm:w-52">
-                <a
-                href="#"
+                <div
+                onClick={()=>setRedirect("/liked")}
                 className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                 >
                 Liked Quizzes
-                </a>
+                </div>
             </div>
             </div>
             <input className="mb-5 text-center px-8 py-2 rounded-md shadow-md border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent placeholder-indigo-500 placeholder-opacity-50" placeholder="Search Quizzes"></input>

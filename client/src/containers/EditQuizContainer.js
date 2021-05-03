@@ -55,7 +55,6 @@ const useEditQuizDetailsContainer = ({
     const questions = useRef({})
 
     const setInitialValues = (header, initQs) => {
-        console.log('here')
         if (header) {
             title.current = header.title
             description.current = header.body

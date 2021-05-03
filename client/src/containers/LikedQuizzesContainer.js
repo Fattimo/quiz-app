@@ -1,38 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createContainer } from 'unstated-next';
 
 const LOCALSTORAGE_KEY = 'LIKED_QUIZZES';
+const UNIQUE_ID_KEY = "UNIQUE_ID"
 
 const useLikedQuizzesContainer = () => {
   const [likedQuizzes, setLikedQuizzes] = useState({});
+  const uniqueId = useRef("")
 
   useEffect(() => {
     setLikedQuizzes(JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY)) || {});
+    uniqueId.current = localStorage.getItem(UNIQUE_ID_KEY)
+    if (!uniqueId.current) {
+      uniqueId.current = require('uniqid')()
+      localStorage.setItem(UNIQUE_ID_KEY, uniqueId.current)
+    }
   }, []);
 
   useEffect(() => {
     localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(likedQuizzes));
   }, [likedQuizzes]);
 
-  const isSaved = documentId => {
+  const isLiked = documentId => {
     return !!likedQuizzes[documentId];
   };
 
-  const likeQuiz = product => {
+  const likeQuiz = quiz => {
     setLikedQuizzes({
       ...likedQuizzes,
-      [product._id]: product
+      [quiz.id]: quiz
     });
   };
 
-  const removelikedQuiz = documentId => {
+  const removeLikedQuiz = documentId => {
     const { [documentId]: omit, ...quizzes } = likedQuizzes;
     setLikedQuizzes(quizzes);
   };
 
   const toggleQuizLike = quiz => {
-    if (isSaved(quiz.id)) {
-      removelikedQuiz(quiz.id);
+    if (isLiked(quiz.id)) {
+      removeLikedQuiz(quiz.id);
     } else {
       likeQuiz(quiz);
     }
@@ -40,8 +47,9 @@ const useLikedQuizzesContainer = () => {
 
   return {
     likedQuizzes,
-    isSaved,
-    toggleQuizLike
+    isLiked,
+    toggleQuizLike,
+    removeLikedQuiz
   };
 };
 

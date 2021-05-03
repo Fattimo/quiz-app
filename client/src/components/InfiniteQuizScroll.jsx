@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 
 import QuizCard from "./QuizCard"
 import { getPaginatedQuizzes } from "../services/http"
+import LikedQuizzesContainer from "../containers/LikedQuizzesContainer"
 
 const InfiniteQuizScroll = () => {
     const ITEMS_PER_PAGE = 5
@@ -27,6 +28,12 @@ const InfiniteQuizScroll = () => {
         }
         setQuizzes([...quizzes, ...nextPage.quizzes])
     }
+
+    const { isLiked, toggleQuizLike } = LikedQuizzesContainer.useContainer()
+    const handleLikeClick = (quiz) => () => {
+        toggleQuizLike(quiz)
+    }
+
     return (
         <InfiniteScroll
             dataLength={quizzes.length}
@@ -40,7 +47,7 @@ const InfiniteQuizScroll = () => {
             }
         >
             {quizzes.map((i, index) => (
-                <QuizCard key={index} item={i}></QuizCard>
+                <QuizCard key={index} item={i} isLiked={isLiked(i.id)} toggleLike={handleLikeClick(i)}></QuizCard>
             ))}
         </InfiniteScroll>
     )
