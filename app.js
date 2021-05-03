@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors')
 
 const router = require('./server/main/routes')
 
@@ -12,6 +13,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+const isProduction = process.env.NODE_ENV === 'production'
+const origin = {
+  origin: isProduction ? 'https://quiz-thin.herokuapp.com/' : '*',
+}
+app.use(cors(origin))
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/', router)
