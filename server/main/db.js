@@ -3,7 +3,9 @@ const config = require("../config")
 
 const isProduction = process.env.NODE_ENV == 'production'
 const connectConfig = isProduction ? 
-    { ssl: true, connectionString: process.env.DATABASE_URL } : 
+    {  ssl: {
+      rejectUnauthorized: false
+    }, connectionString: process.env.DATABASE_URL } : 
     {
         user: 'postgres',
         host: 'localhost',

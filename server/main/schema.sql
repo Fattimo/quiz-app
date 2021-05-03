@@ -32,20 +32,20 @@ CREATE TABLE question_answers (
 
 --Phase 2 Schemas--
 
-CREATE TABLE question_response (
-    id SERIAL PRIMARY KEY,
-    quiz_response_id INT REFERENCES quiz_response(id),
-    question_id INT REFERENCES questions(id),
-    answer_id INT REFERENCES question_answers(id)
-);
+-- CREATE TABLE question_response (
+--     id SERIAL PRIMARY KEY,
+--     quiz_response_id INT REFERENCES quiz_response(id),
+--     question_id INT REFERENCES questions(id),
+--     answer_id INT REFERENCES question_answers(id)
+-- );
 
-CREATE TABLE quiz_response (
-    id SERIAL PRIMARY KEY,
-    quiz_id INT REFERENCES quizzes(id),
-    score INT
-);
+-- CREATE TABLE quiz_response (
+--     id SERIAL PRIMARY KEY,
+--     quiz_id INT REFERENCES quizzes(id),
+--     score INT
+-- );
 
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(255) UNIQUE
-);
+-- CREATE TABLE users (
+--     id SERIAL PRIMARY KEY,
+--     username VARCHAR(255) UNIQUE
+-- );
