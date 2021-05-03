@@ -6,7 +6,6 @@ const QuizDetails = (props) => {
 
     const { toggleQuizLike, isLiked } = LikedQuizzesContainer.useContainer()
     const handleQuizToggle = () => {
-        console.log(header)
         toggleQuizLike(header)
     }
 
