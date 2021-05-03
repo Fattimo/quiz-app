@@ -11,29 +11,25 @@ const EditableQuizView = (props) => {
     //TODO: put stuff from db here for initial state setting
     const quiz = useContainer(EditQuizContainer)
     const [items, setItems] = useState([])
+    const [header, setHeader] = useState({})
     const [redirect, setRedirect] = useState(0)
 
     useEffect(() => {
         quiz.setInitialValues(props.header, props.questions)
         setItems(Object.entries(quiz.questions))
+        setHeader(quiz.headerGetters())
     }, [quiz, props.header, props.questions])
 
     const saveQuiz = async () => {
-        const title = quiz.header.title[0].current
-        const body = quiz.header.description[0].current
-        const difficulty = quiz.header.difficulty[0]
-        const color = quiz.header.color[0]
-        const quizId = (await updateQuiz(title, body, difficulty, color, items.length, props.header.id)).data[0].id
+        const {title, description, difficulty, color} = quiz.headerGetters()
+        const quizId = (await updateQuiz(title, description, difficulty, color, items.length, props.header.id)).data[0].id
         await updateChildren(quizId)
         setRedirect(quizId)
     }
 
     const createNewQuiz = async () => {
-        const title = quiz.header.title[0].current
-        const body = quiz.header.description[0].current
-        const difficulty = quiz.header.difficulty[0]
-        const color = quiz.header.color[0]
-        const newQuizId = (await createQuiz(title, body, difficulty, color, items.length)).data[0].id
+        const {title, description, difficulty, color} = quiz.headerGetters()
+        const newQuizId = (await createQuiz(title, description, difficulty, color, items.length)).data[0].id
         await updateChildren(newQuizId)
         setRedirect(newQuizId)
     }
@@ -65,7 +61,7 @@ const EditableQuizView = (props) => {
     return redirect ? <Redirect to={`/quizzes/${redirect}`}/>
     :(
         <div className="pb-8">
-            <EditableQuizDetails states={quiz.header} numQuestions={items.length}/>
+            <EditableQuizDetails getters={header} setters={quiz.headerSetters} numQuestions={items.length}/>
             {items.map(([id, item], index) => (
                 <EditableQuestionCard 
                     key={id} 

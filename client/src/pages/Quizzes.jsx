@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import Home from './Home'
 import QuizView from '../components/QuizView'
 import QuizContainer from '../containers/QuizContainer'
-import { getAllQuestions, getQuiz, getQuizQuestions } from '../services/http'
+import { getQuiz, getQuizQuestions } from '../services/http'
 
 function Quizzes() {  
     let match = useRouteMatch();

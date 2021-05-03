@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import ContentEditable from "react-contenteditable"
 
 import Dropdown from "./Dropdown"
@@ -6,14 +6,33 @@ import Dropdown from "./Dropdown"
 const EditableQuizDetails = (props) => {
     const COLORS = ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink']
     const DIFFICULTIES = ['easy', 'medium', 'hard']
-    //TODO: replace with database equivalents
-    const [theme, setTheme] = props.states.color
-    const [difficulty, setDifficulty] = props.states.difficulty
+
+    const [theme, setTheme] = useState('indigo')
+    const handleThemeSelection = (dropdownResult) => {
+        setTheme(props.setters.color(dropdownResult))
+    }
+    const [difficulty, setDifficulty] = useState('easy')
+    const handleDifficultySelection = (dropdownResult) => {
+        setDifficulty(props.setters.difficulty(dropdownResult))
+    }
     const [showTheme, setShowTheme] = useState(false)
     const [showDifficulty, setShowDifficulty] = useState(false)
 
-    const [title, handleTitleChange] = props.states.title
-    const [description, handleDescriptionChange] = props.states.description
+    const title = useRef('Title')
+    const handleTitleChange = (e) => {
+        title.current = props.setters.title(e.target.value)
+    }
+    const description = useRef('Desc')
+    const handleDescriptionChange = (e) => {
+        description.current = props.setters.description(e.target.value)
+    }
+
+    useEffect(() => {
+        setTheme(props.getters.color || 'indigo')
+        setDifficulty(props.getters.difficulty || 'easy')
+        title.current = props.getters.title || "Title"
+        description.current = props.getters.description || "Description"
+    }, [ props.getters ])
     
 
     const toggleTheme = () => {
@@ -63,10 +82,10 @@ const EditableQuizDetails = (props) => {
             </div>
             <div className="text-center flex lg:flex-col flex-col md:flex-row content-around justify-around items-center lg:items-start md:w-9/12 h-36 lg:h-40 md:h-auto lg:w-auto">
                 <div className={`lg:w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
-                    Theme: <Dropdown show={showTheme} toggle={toggleTheme} setter={setTheme} selection={theme} options={COLORS} decorator={true}/>
+                    Theme: <Dropdown show={showTheme} toggle={toggleTheme} setter={handleThemeSelection} selection={theme} options={COLORS} decorator={true}/>
                 </div>
                 <div className={`lg:w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
-                    Difficulty: <Dropdown show={showDifficulty} toggle={toggleDifficulty} setter={setDifficulty} selection={difficulty} options={DIFFICULTIES}/>
+                    Difficulty: <Dropdown show={showDifficulty} toggle={toggleDifficulty} setter={handleDifficultySelection} selection={difficulty} options={DIFFICULTIES}/>
                 </div>
                 <h2 className="text-base whitespace-nowrap text-indigo-600 font-semibold tracking-wide uppercase text-left">{props.numQuestions} Questions</h2>
             </div>

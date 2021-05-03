@@ -13,19 +13,22 @@ const EditableQuestionCard = (props) => {
 
     const POINTS = [1,2,3,4,5,6,7,8,9,10]
     const [points, setPointsState] = useState(props.getters.points)
-    const setPoints = (value) => setPointsState(props.setters.points(value))
+    const setPoints = (value) => {setPointsState(props.setters.points(value))}
     const [showPoints, setShowPoints] = useState(false)
     const toggleShowPoints = () => setShowPoints(!showPoints)
     
     const body  = useRef(props.getters.body)
     const handleBodyChange = (e) => body.current = props.setters.body(e.target.value)
     
+    const preventDefault = (e) => {
+        e.preventDefault()
+    }
     //TODO: change push notifications to be question id
     return (
         <div className="max-w-md mb-5 mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
             <div className="md:flex">
                 <div className="p-8 w-full">
-                    <form action='javascript:void(0);' method="POST">
+                    <form onSubmit={preventDefault}>
                         <fieldset>
                         <div>
                             <div className="flex justify-between">

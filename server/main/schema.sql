@@ -11,9 +11,9 @@ CREATE TABLE quizzes (
     num_questions INT DEFAULT 0,
     likes INT DEFAULT 0,
     --Put in the table, but doesn't actually do anything, for PHASE 2--
-    liked_user_ids INT[] DEFAULT ARRAY[]::INT[],
+    liked_user_ids INT[] DEFAULT ARRAY[]::INT[]
     --Not implemented, for PHASE 2--
-    creator INT REFERENCES users(username) DEFAULT "Anonymous",
+    -- creator INT REFERENCES users(username) DEFAULT "Anonymous",
 );
 
 CREATE TABLE questions (

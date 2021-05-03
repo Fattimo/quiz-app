@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { createContainer } from 'unstated-next'
 
 const useEditQuizDetailsContainer = ({
@@ -11,13 +11,35 @@ const useEditQuizDetailsContainer = ({
     // headers
     const title = useRef(initialTitle)
     const description = useRef(initialDescription)
+    const color = useRef(initialColor)
+    const difficulty = useRef(initialDifficulty)
 
-    const handleChange = property => e => {
-        property.current = e.target.value
+    const handleChange = (ref) => (value) => {
+        ref.current = value;
+        return value;
     }
-    
-    const color = useState(initialColor)
-    const difficulty = useState(initialDifficulty)
+
+    const getValue = (ref) => {
+        return ref.current
+    }
+
+    const makeHeaderGetters = () => {
+        return {
+            title: getValue(title),
+            description: getValue(description), 
+            color: getValue(color),
+            difficulty: getValue(difficulty)
+        }
+    }
+
+    const makeHeaderSetters = () =>{
+        return {
+            title: handleChange(title),
+            description: handleChange(description), 
+            color: handleChange(color), 
+            difficulty: handleChange(difficulty)
+        }
+    }
 
     const labeler = useRef(-1)
 
@@ -33,11 +55,12 @@ const useEditQuizDetailsContainer = ({
     const questions = useRef({})
 
     const setInitialValues = (header, initQs) => {
+        console.log('here')
         if (header) {
             title.current = header.title
             description.current = header.body
-            color[1](header.color)
-            difficulty[1](header.difficulty)
+            color.current = header.color
+            difficulty.current = header.difficulty
         }
         if (initQs) {
             for(const question of initQs) {
@@ -147,25 +170,17 @@ const useEditQuizDetailsContainer = ({
         return responseId
     }
 
-    const getQuestions = () => {
-        return questions.current
-    }
-
     
     return {
-        header: {
-            title: [title, handleChange(title)],
-            description: [description, handleChange(description)], 
-            color, 
-            difficulty
-        },
+        headerGetters: makeHeaderGetters,
+        headerSetters: makeHeaderSetters(),
         questionPropertyGetters,
         questionPropertySetters,
         addQuestion,
         removeQuestion,
         addResponse,
         removeResponse,
-        questions: getQuestions(),
+        questions: getValue(questions),
         removedQuestions,
         removedResponses,
         setInitialValues
