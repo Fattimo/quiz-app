@@ -1,5 +1,7 @@
 import { useState } from "react"
 
+import { Link } from "react-router-dom"
+
 //https://tailwindui.com/components/application-ui/navigation/navbars
 /* This example requires Tailwind CSS v2.0+ */
 export default function Nav() {
@@ -7,7 +9,7 @@ export default function Nav() {
         { name: 'All Quizzes', href: '/quizzes' },
         { name: 'Make Quiz', href: '/edit/new' },
         { name: 'Liked Quizzes', href: '#' },
-        { name: 'Source Code', href: 'https://github.com/Fattimo/quiz-app', target: "_blank" },
+        { name: 'Source Code', href: 'https://github.com/Fattimo/quiz-app', external: true },
         { name: 'About', href: '/about'}
       ]
 
@@ -73,11 +75,16 @@ export default function Nav() {
   )
 }
 
-const MobileLink = (props) => (
-    <a href={props.item.href} target={props.item.target} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{props.item.name}</a>
-)
+const MobileLink = (props) => {
+    return props.item.external ? 
+    <a href={props.item.href} target='_blank' rel="noopener noreferrer" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{props.item.name}</a>:
+    <Link to={props.item.href} target={props.item.target} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">{props.item.name}</Link>
+}
 
-const DashLink = (props) => (
-    <a href={props.item.href} target={props.item.target} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{props.item.name}</a>
-)
+const DashLink = (props) => {
+    return props.item.external ?
+    <a href={props.item.href} target='_blank' rel="noopener noreferrer" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{props.item.name}</a>:
+    <Link to={props.item.href} target={props.item.target} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">{props.item.name}</Link>
+}
+
 

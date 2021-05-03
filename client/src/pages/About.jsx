@@ -16,8 +16,7 @@ function About(props) {
             <br/>
             <p>
                 Planned features that will be complete soon (if not complete already) is manipulation of local storage to save liked quizzes and store
-                highest score attempts, general UI updates to improve user experience, search, Jest test suites (on development side), properly using
-                the React Router for DOM redirects (development), saves on API calls (development), and general styling changes.
+                highest score attempts, general UI updates to improve user experience, search, Jest test suites (on development side), saves on API calls (development), and general styling changes.
             </p>
             <br/>
             <p>
