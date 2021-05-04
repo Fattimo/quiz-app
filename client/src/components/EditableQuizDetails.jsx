@@ -67,7 +67,7 @@ const EditableQuizDetails = (props) => {
                     </div>
                 </div>
                 <div className="flex flex-col w-60 sm:w-72 md:w-96 items-start items-center text-center md:text-left md:items-start">
-                    <h2 className="pl-1 text-base text-indigo-600 font-semibold tracking-wide uppercase text-left">Editing: </h2>
+                    <h2 className="pl-1 text-base text-indigo-600 font-semibold tracking-wide uppercase text-left">Click Anything To Edit: </h2>
                     <ContentEditable 
                         className="p-1 mt-2 w-full break-words text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
                         html={title.current}

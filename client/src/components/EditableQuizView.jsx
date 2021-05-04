@@ -4,7 +4,7 @@ import { useContainer } from "unstated-next"
 import EditableQuizDetails from "./EditableQuizDetails"
 import EditableQuestionCard from "./EditableQuestionCard"
 import EditQuizContainer from "../containers/EditQuizContainer"
-import { createAnswer, createQuestion, createQuiz, updateAnswer, updateQuestion, updateQuiz } from "../services/http"
+import { createAnswer, createQuestion, createQuiz, deleteAnswer, deleteQuestion, updateAnswer, updateQuestion, updateQuiz } from "../services/http"
 import { Redirect } from "react-router"
 
 const EditableQuizView = (props) => {
@@ -24,6 +24,7 @@ const EditableQuizView = (props) => {
         const {title, description, difficulty, color} = quiz.headerGetters()
         const quizId = (await updateQuiz(title, description, difficulty, color, items.length, props.header.id)).data[0].id
         await updateChildren(quizId)
+        await removeQuestionsResponses(quiz.removedQuestions, quiz.removedResponses)
         setRedirect(quizId)
     }
 
@@ -53,8 +54,22 @@ const EditableQuizView = (props) => {
         }
     }
 
+    const removeQuestionsResponses = async (removedQuestions, removedResponses) => {
+        for (const response of removedResponses) {
+            await deleteAnswer(parseInt(response))
+        }
+        for (const question of removedQuestions) {
+            await deleteQuestion(parseInt(question))
+        }
+    }
+
     const addQuestion = () => {
         quiz.addQuestion()
+        setItems(Object.entries(quiz.questions))
+    }
+
+    const removeQuestion = (id) => () => {
+        quiz.removeQuestion(id)
         setItems(Object.entries(quiz.questions))
     }
 
@@ -69,7 +84,9 @@ const EditableQuizView = (props) => {
                     item={{id, ...item}} 
                     getters={quiz.questionPropertyGetters(id)}
                     setters={quiz.questionPropertySetters(id)}
+                    removeQuestion={removeQuestion(id)}
                     addResponse={quiz.addResponse(id)}
+                    removeResponse={quiz.removeResponse(id)}
                 />
             ))}
             <div className="text-center">

@@ -220,7 +220,7 @@ router.put('/api/put/answer', (req, res, next) => {
 })
 
 router.delete('/api/delete/answer', (req, res, next) => {
-    const answer_id = req.body.response_id
+    const answer_id = req.body.answer_id
     pool.query(`DELETE FROM question_answers
         WHERE id=$1`, [ answer_id ],
         (q_err, q_res) => {

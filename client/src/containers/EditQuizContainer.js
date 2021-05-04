@@ -106,7 +106,7 @@ const useEditQuizDetailsContainer = ({
         const omittedQuestion = questions.current[questionId]
         if (questionId > 0) {
             removedQuestions.push(questionId)
-            for (const responseId in omittedQuestion) {
+            for (const responseId in omittedQuestion.responses) {
                 if (responseId > 0) {
                     removedResponses.push(responseId)
                 }
@@ -161,7 +161,7 @@ const useEditQuizDetailsContainer = ({
         return labeler.current--
     }
 
-    const removeResponse = (questionId, responseId) => {
+    const removeResponse = (questionId) => (responseId) => {
         if (responseId > 0) {
             removedResponses.push(responseId)
         }
