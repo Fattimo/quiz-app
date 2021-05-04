@@ -7,11 +7,11 @@ const EditableQuizDetails = (props) => {
     const COLORS = ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink']
     const DIFFICULTIES = ['easy', 'medium', 'hard']
 
-    const [theme, setTheme] = useState('indigo')
+    const [theme, setTheme] = useState('')
     const handleThemeSelection = (dropdownResult) => {
         setTheme(props.setters.color(dropdownResult))
     }
-    const [difficulty, setDifficulty] = useState('easy')
+    const [difficulty, setDifficulty] = useState('')
     const handleDifficultySelection = (dropdownResult) => {
         setDifficulty(props.setters.difficulty(dropdownResult))
     }
