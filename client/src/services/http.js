@@ -38,19 +38,19 @@ export const updateQuiz = (title, body, difficulty, color, num_questions, quiz_i
 }
 
 export const deleteQuizQuestionAnswers = (quiz_id) => {
-    const res = axios.delete('api/delete/quizquestionanswers', { data: {quiz_id} })
+    const res = axios.delete('/api/delete/quizquestionanswers', { data: {quiz_id} })
     return res
 }
 
 export const deleteQuizQuestions = async (quiz_id) => {
     await deleteQuizQuestionAnswers(quiz_id)
-    const res = axios.delete('api/delete/quizquestions', {data: { quiz_id }})
+    const res = axios.delete('/api/delete/quizquestions', {data: { quiz_id }})
     return res
 }
 
 export const deleteQuiz = async (quiz_id) => {
     await deleteQuizQuestions(quiz_id)
-    const res = axios.delete('api/delete/quiz', {data: { quiz_id }})
+    const res = axios.delete('/api/delete/quiz', {data: { quiz_id }})
     return res
 }
 

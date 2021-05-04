@@ -4,7 +4,7 @@ import { useContainer } from "unstated-next"
 import EditableQuizDetails from "./EditableQuizDetails"
 import EditableQuestionCard from "./EditableQuestionCard"
 import EditQuizContainer from "../containers/EditQuizContainer"
-import { createAnswer, createQuestion, createQuiz, deleteAnswer, deleteQuestion, updateAnswer, updateQuestion, updateQuiz } from "../services/http"
+import { createAnswer, createQuestion, createQuiz, deleteAnswer, deleteQuestion, deleteQuiz, updateAnswer, updateQuestion, updateQuiz } from "../services/http"
 import { Redirect } from "react-router"
 
 const EditableQuizView = (props) => {
@@ -25,14 +25,14 @@ const EditableQuizView = (props) => {
         const quizId = (await updateQuiz(title, description, difficulty, color, items.length, props.header.id)).data[0].id
         await updateChildren(quizId)
         await removeQuestionsResponses(quiz.removedQuestions, quiz.removedResponses)
-        setRedirect(quizId)
+        setRedirect(`/quizzes/${quizId}`)
     }
 
     const createNewQuiz = async () => {
         const {title, description, difficulty, color} = quiz.headerGetters()
         const newQuizId = (await createQuiz(title, description, difficulty, color, items.length)).data[0].id
         await updateChildren(newQuizId)
-        setRedirect(newQuizId)
+        setRedirect(`/quizzes/${newQuizId}`)
     }
 
     const updateChildren = async (quizId) => {
@@ -63,6 +63,11 @@ const EditableQuizView = (props) => {
         }
     }
 
+    const removeQuiz = async () => {
+        await deleteQuiz(parseInt(props.quizId))
+        setRedirect(`/quizzes`)
+    }
+
     const addQuestion = () => {
         quiz.addQuestion()
         setItems(Object.entries(quiz.questions))
@@ -73,7 +78,7 @@ const EditableQuizView = (props) => {
         setItems(Object.entries(quiz.questions))
     }
 
-    return redirect ? <Redirect to={`/quizzes/${redirect}`}/>
+    return redirect ? <Redirect to={redirect}/>
     :(
         <div className="pb-8">
             <EditableQuizDetails getters={header} setters={quiz.headerSetters} numQuestions={items.length}/>
@@ -104,7 +109,7 @@ const EditableQuizView = (props) => {
                 <button onClick={saveQuiz} type="submit" className="mx-4 w-48 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Save and Update Quiz
                 </button>
-                <button type="submit" className="mx-4 inline-flex w-48 justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button onClick={removeQuiz}type="submit" className="mx-4 inline-flex w-48 justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Delete Quiz
                 </button>
             </div>

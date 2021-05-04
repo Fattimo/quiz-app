@@ -68,7 +68,7 @@ router.put('/api/put/quiz', (req, res, next) => {
         })
 })
 
-router.delete('api/delete/quizquestionanswers', (req, res, next) => {
+router.delete('/api/delete/quizquestionanswers', (req, res, next) => {
     const quiz_id=req.body.quiz_id
     pool.query(`DELETE FROM question_answers
                 WHERE question_id IN 
