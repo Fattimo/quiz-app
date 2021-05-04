@@ -130,7 +130,7 @@ export const deleteAnswer = (answer_id) => {
     return res
 }
 
-export const getAllQuestions = () => {
+export const getSampleQuestions = () => {
     //query to get answer choices:
     const items = [{
         id: Number.MIN_SAFE_INTEGER,

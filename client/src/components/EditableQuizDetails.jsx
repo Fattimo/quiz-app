@@ -6,33 +6,29 @@ import Dropdown from "./Dropdown"
 const EditableQuizDetails = (props) => {
     const COLORS = ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink']
     const DIFFICULTIES = ['easy', 'medium', 'hard']
+    const { header, changeProperty, numQuestions } = props
 
     const [theme, setTheme] = useState('')
-    const handleThemeSelection = (dropdownResult) => {
-        setTheme(props.setters.color(dropdownResult))
-    }
+    const handleThemeSelection = (dropdownResult) => setTheme(changeProperty("color", dropdownResult))
+    
     const [difficulty, setDifficulty] = useState('')
-    const handleDifficultySelection = (dropdownResult) => {
-        setDifficulty(props.setters.difficulty(dropdownResult))
-    }
+    const handleDifficultySelection = (dropdownResult) => setDifficulty(changeProperty("difficulty", dropdownResult))
+    
+    const title = useRef('Title')
+    const handleTitleChange = (e) => title.current = changeProperty("title", e.target.value)
+    
+    const description = useRef('Desc')
+    const handleDescriptionChange = (e) => description.current = changeProperty("body", e.target.value)
+    
     const [showTheme, setShowTheme] = useState(false)
     const [showDifficulty, setShowDifficulty] = useState(false)
 
-    const title = useRef('Title')
-    const handleTitleChange = (e) => {
-        title.current = props.setters.title(e.target.value)
-    }
-    const description = useRef('Desc')
-    const handleDescriptionChange = (e) => {
-        description.current = props.setters.description(e.target.value)
-    }
-
     useEffect(() => {
-        setTheme(props.getters.color || 'indigo')
-        setDifficulty(props.getters.difficulty || 'easy')
-        title.current = props.getters.title || "Title"
-        description.current = props.getters.description || "Description"
-    }, [ props.getters ])
+        setTheme(header.current.color || 'indigo')
+        setDifficulty(header.current.difficulty || 'easy')
+        title.current = header.current.title || "Title"
+        description.current = header.current.description || "Description"
+    }, [ header ])
     
 
     const toggleTheme = () => {
@@ -87,7 +83,7 @@ const EditableQuizDetails = (props) => {
                 <div className={`lg:w-52 justify-between items-center flex text-base text-${props.decorator ? props.selection : 'indigo'}-500 font-semibold tracking-wide uppercase text-left`}>
                     Difficulty: <Dropdown show={showDifficulty} toggle={toggleDifficulty} setter={handleDifficultySelection} selection={difficulty} options={DIFFICULTIES}/>
                 </div>
-                <h2 className="text-base whitespace-nowrap text-indigo-600 font-semibold tracking-wide uppercase text-left">{props.numQuestions} Questions</h2>
+                <h2 className="text-base whitespace-nowrap text-indigo-600 font-semibold tracking-wide uppercase text-left">{numQuestions} Questions</h2>
             </div>
         </div>
     )

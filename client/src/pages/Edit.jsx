@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import {
     useRouteMatch,
     useParams,
@@ -8,8 +7,6 @@ import {
 } from 'react-router-dom'
 
 import EditableQuizView from '../components/EditableQuizView'
-import EditQuizContainer from '../containers/EditQuizContainer'
-import { getAllQuestions, getQuiz, getQuizQuestions } from '../services/http'
 
 function EditPage() {  
     let match = useRouteMatch();
@@ -30,29 +27,9 @@ function EditPage() {
   
 function Quiz() {
     let { quizId } = useParams();
-    const [questions, setQuestions] = useState()
-    const [quiz, setQuiz] = useState()
-
-    useEffect(() => {
-      if (quizId === "new") {
-        setQuestions(getAllQuestions())
-        return
-      }
-      const fetchData = async () => {
-        const [quizDetails, quizQuestions] = await Promise.all([getQuiz(parseInt(quizId)), getQuizQuestions(parseInt(quizId))])
-        setQuestions(quizQuestions.data)
-        setQuiz(quizDetails.data[0])
-      }
-      fetchData()
-    }, [quizId])
 
     return (
-      <EditQuizContainer.Provider 
-      initialState={{
-        initialQuestions: questions
-      }}>
-        <EditableQuizView quizId={quizId} new={quizId==="new"} header={quiz} questions={questions}/>
-      </EditQuizContainer.Provider>
+      <EditableQuizView quizId={quizId} new={quizId==="new"}/>
     );
 }
 

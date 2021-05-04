@@ -3,27 +3,28 @@ import Dropdown from "./Dropdown"
 import ContentEditable from "react-contenteditable"
 
 const EditableQuestionCard = (props) => {
-    const question = props.item
+    const {question, number, changeQuestionProperty, removeQuestion, addResponse, removeResponse, changeResponseProperty } = props
 
     const [responses, setResponses] = useState(Object.keys(question.responses))
     const handleAddResponse = () => {
-        props.addResponse()
+        addResponse()
         setResponses(Object.keys(question.responses))
     }
 
     const handleRemoveResponse = (id) => () => {
-        props.removeResponse(id)
+        removeResponse(id)
         setResponses(Object.keys(question.responses))
     }
 
     const POINTS = [1,2,3,4,5,6,7,8,9,10]
-    const [points, setPointsState] = useState(props.getters.points)
-    const setPoints = (value) => {setPointsState(props.setters.points(value))}
+    const [points, setPointsState] = useState(question.points)
+    const setPoints = (value) => {setPointsState(changeQuestionProperty("points", value))}
+
     const [showPoints, setShowPoints] = useState(false)
     const toggleShowPoints = () => setShowPoints(!showPoints)
     
     const body  = useRef(props.getters.body)
-    const handleBodyChange = (e) => body.current = props.setters.body(e.target.value)
+    const handleBodyChange = (e) => body.current = changeQuestionProperty("body", e.target.value)
     
     const preventDefault = (e) => {
         e.preventDefault()
@@ -38,10 +39,10 @@ const EditableQuestionCard = (props) => {
                         <div>
                             <div className="flex justify-between">
                                 <div className="flex items-center">
-                                    <button onClick={props.removeQuestion} className="mr-2 flex cursor-pointer items-center text-gray-400 hover:text-indigo-600 hover:animate-pulse duration-300">
+                                    <button onClick={removeQuestion} className="mr-2 flex cursor-pointer items-center text-gray-400 hover:text-indigo-600 hover:animate-pulse duration-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg>
                                     </button>
-                                    <legend className="text-base font-medium uppercase tracking-wide text-sm text-indigo-500 font-semibold">Question {props.number + 1}: </legend>
+                                    <legend className="text-base font-medium uppercase tracking-wide text-sm text-indigo-500 font-semibold">Question {number + 1}: </legend>
                                 </div>
                                 <div>
                                     <Dropdown 
@@ -62,8 +63,8 @@ const EditableQuestionCard = (props) => {
                         </div>
                         <AnswerChoices 
                             responseIds={responses}
-                            correct={props.getters.correct}
-                            setCorrect={props.setters.correct}
+                            correct={question.correct}
+                            setCorrect={question.correct}
                             response={props.getters.response}
                             setResponse={props.setters.response}
                             addResponse={handleAddResponse}
