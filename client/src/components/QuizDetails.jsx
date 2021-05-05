@@ -2,7 +2,7 @@ import LikedQuizzesContainer from "../containers/LikedQuizzesContainer"
 import LikeButton from "./LikeButton"
 
 const QuizDetails = (props) => {
-    const header = props.details
+    const header = props.details || {}
     const highScore = props.highScore
 
     const { toggleQuizLike, isLiked } = LikedQuizzesContainer.useContainer()

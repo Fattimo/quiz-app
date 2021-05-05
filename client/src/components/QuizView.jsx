@@ -10,7 +10,7 @@ const useQuizGenerator = (quizId) => {
     const [quizDetails, setQuizDetails] = useState({})
     useEffect(()=> {
         const fetchData = async () => {
-            const [quizDetails, quizQuestions] = await Promise.all([getQuiz(parseInt(quizId)), getQuizQuestions(parseInt(quizId))])
+            const [quizDetails, quizQuestions] = await Promise.all([getQuiz(quizId), getQuizQuestions(quizId)])
             setQuestions(quizQuestions.data)
             setQuizDetails(quizDetails.data[0])
         }

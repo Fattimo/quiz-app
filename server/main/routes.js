@@ -1,70 +1,107 @@
 var express = require('express')
 var router = express.Router()
+const {body, check, validationResult} = require('express-validator')
+
 var pool = require('./db')
 
 /**
  * Quizzes Routes
  */
 
+const errHandling = (q_err, q_res, res) => {
+  if (q_err) {
+    res.status(400).json({errors: q_err})
+    return true
+  }
+  console.log(rows in q_res)
+  if (!(rows in q_res)) {
+    res.status(400).json({message: "The query was invalid"})
+    return true
+  }
+  return false
+}
+
+const validationHandling = (req, res) => {
+  const errors = validationResult(req)
+  if(!errors.isEmpty()) {
+    res.status(400).json({errors: errors.array()})
+    return true
+  }
+  return false
+}
+
 router.get('/api/get/allquizzespaginated', (req, res, next ) => {
-    const page = parseInt(req.query.page) || 0
-    const limit = parseInt(req.query.limit) || 5
+  const page = parseInt(req.query.page) || 0
+  const limit = parseInt(req.query.limit) || 5
   pool.query(`SELECT * FROM quizzes 
-              ORDER BY last_updated DESC
-              LIMIT $1 OFFSET $2`, [ limit, page * limit ],
-            (q_err, q_res) => {
-            res.json({
-                quizzes: q_res.rows,
-                page: page,
-                isLastPage: q_res.rows.length < limit
-            })
+    ORDER BY last_updated DESC
+    LIMIT $1 OFFSET $2`, [ limit, page * limit ],
+    (q_err, q_res) => {
+      if (errHandling(q_err, q_res, res)) return
+      res.json({
+        quizzes: q_res.rows,
+        page: page,
+        isLastPage: q_res.rows.length < limit
+      })
   })
 })
 
-router.get('/api/get/quiz', (req, res, next) => {
-  const quiz_id = req.query.quiz_id
+router.get('/api/get/quiz',
+  check("quiz_id").isNumeric().withMessage("Id isn't numeric"),
+  (req, res, next) => {
+    if (validationHandling(req, res)) return
+    const quiz_id = req.query.quiz_id
 
-  pool.query(`SELECT * FROM quizzes
-              WHERE id=$1`,
-            [ quiz_id ], (q_err, q_res) => {
-                res.json(q_res.rows)
-      })
-} )
+    pool.query(`SELECT * FROM quizzes
+      WHERE id=$1`,
+      [ quiz_id ], 
+      (q_err, q_res) => {
+        if (errHandling(q_err, q_res, res)) return
+        res.json(q_res.rows)
+      }
+    )
+})
 
+const COLORS = ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink']
+const DIFFICULTIES = ['easy', 'medium', 'hard']
+const quizCheck = [
+  check()
+]
 
-router.post('/api/post/createquiz', (req, res, next) => {
-  const values = [ 
-                    req.body.title, 
-                    req.body.body,
-                    req.body.difficulty, 
-                    req.body.color,
-                    req.body.num_questions
-                ]
-  pool.query(`INSERT INTO quizzes(title, body, difficulty, color, num_questions, last_updated)
-              VALUES($1, $2, $3, $4, $5, NOW() )
-              RETURNING id`,
-           values, (q_err, q_res) => {
-          if(q_err) res.status(400)
-          res.json(q_res.rows)
+router.post('/api/post/createquiz', 
+  (req, res, next) => {
+    const values = [ 
+      req.body.title, 
+      req.body.body,
+      req.body.difficulty, 
+      req.body.color,
+      req.body.num_questions
+    ]
+    pool.query(`INSERT INTO quizzes(title, body, difficulty, color, num_questions, last_updated)
+      VALUES($1, $2, $3, $4, $5, NOW() )
+      RETURNING id`,
+      values, (q_err, q_res) => {
+      if (errHandling(q_err, q_res, res)) return
+      res.json(q_res.rows)
     })
 })
 
 router.put('/api/put/quiz', (req, res, next) => {
   const values = [ 
-                    req.body.title,
-                    req.body.body, 
-                    req.body.difficulty, 
-                    req.body.color, 
-                    req.body.num_questions,
-                    req.body.quiz_id
-                ]
+    req.body.title,
+    req.body.body, 
+    req.body.difficulty, 
+    req.body.color, 
+    req.body.num_questions,
+    req.body.quiz_id
+  ]
   pool.query(`UPDATE quizzes SET title=$1, body=$2, difficulty=$3, color=$4, num_questions=$5, last_updated=NOW()
-              WHERE id = $6
-              RETURNING id`, values,
-              (q_err, q_res) => {
-                res.json(q_res.rows)
-                console.log(q_err)
-        })
+    WHERE id = $6
+    RETURNING id`, values,
+    (q_err, q_res) => {
+      if (errHandling(q_err, q_res, res)) return
+      res.json(q_res.rows)
+    })
 })
 
 router.delete('/api/delete/quizquestionanswers', (req, res, next) => {

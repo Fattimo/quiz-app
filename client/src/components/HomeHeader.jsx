@@ -16,7 +16,7 @@ const HomeHeader= (props) => {
             <div className="mt-5 sm:mt-8 flex justify-center mb-5">
             <div className="rounded-md shadow w-44 sm:w-52">
                 <div
-                onClick={() => setRedirect("/edit/new")}
+                onClick={() => setRedirect("/new")}
                 className="w-full cursor-pointer flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
                 >
                 Make a Quiz

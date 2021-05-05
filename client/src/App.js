@@ -9,8 +9,10 @@ import Edit from './pages/Edit';
 import Quiz from './pages/Quizzes';
 import About from './pages/About';
 import Liked from './pages/Liked'
+import New from './pages/New';
 import LikedQuizzesContainer from './containers/LikedQuizzesContainer'
 import HighestScoreContainer from './containers/HighestScoreContainer'
+
 
 function App() {
   return (
@@ -31,6 +33,9 @@ function App() {
               </Route>
               <Route path="/liked">
                 <Liked />
+              </Route>
+              <Route path="/new">
+                <New />
               </Route>
               <Route path="/">
                 <Redirect to="/quizzes" />

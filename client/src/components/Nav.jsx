@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 export default function Nav() {
     const navigation = [
         { name: 'All Quizzes', href: '/quizzes' },
-        { name: 'Make Quiz', href: '/edit/new' },
+        { name: 'Make Quiz', href: '/new' },
         { name: 'Liked Quizzes', href: '/liked' },
         { name: 'Source Code', href: 'https://github.com/Fattimo/quiz-app', external: true },
         { name: 'About', href: '/about'}

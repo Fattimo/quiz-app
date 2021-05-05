@@ -29,7 +29,7 @@ function Quiz() {
     let { quizId } = useParams();
 
     return (
-      <EditableQuizView quizId={quizId} new={quizId==="new"}/>
+      <EditableQuizView quizId={quizId} new={false}/>
     );
 }
 

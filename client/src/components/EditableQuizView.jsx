@@ -135,7 +135,7 @@ const EditableQuizView = (props) => {
         setQuizProperty
     } = useQuizHeader()    
 
-    const [initialQuizDetails, setInitialQuizDetails] = useState({})
+    const [initialQuizDetails, setInitialQuizDetails] = useState()
 
     useEffect(() => {
         if (quizId === "new") {
@@ -147,6 +147,7 @@ const EditableQuizView = (props) => {
             setQuestions(quizQuestions.data)
             setQuizDetails(quizDetails.data[0])
             setInitialQuizDetails(quizDetails.data[0])
+            if (quizDetails.data.length === 0) setRedirect('/new')
         }
         fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -200,7 +201,7 @@ const EditableQuizView = (props) => {
     return redirect ? <Redirect to={redirect}/>
     :(
         <div className="pb-8">
-            <EditableQuizDetails changeProperty={setQuizProperty} header={initialQuizDetails} numQuestions={questions.length}/>
+            <EditableQuizDetails changeProperty={setQuizProperty} header={initialQuizDetails || {}} numQuestions={questions.length}/>
             {questions.map((question, index) => (
                 <EditableQuestionCard 
                     key={question.id} 
@@ -219,7 +220,7 @@ const EditableQuizView = (props) => {
                 <svg className="w-20 h-20 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
                 </button>
             </div>
-            {props.quizId === "new" ? 
+            {props.new ? 
             <div className="px-4 pt-3 text-center sm:px-6">
                 <button onClick={saveQuiz(true)} type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Create New Quiz
