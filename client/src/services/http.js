@@ -54,8 +54,16 @@ export const deleteQuiz = async (quiz_id) => {
     return res
 }
 
-export const likeQuiz = (quizId, userId) => {
+export const likeQuizInDb = (quizId, userId) => {
     const res = axios.put('/api/put/likes', {
+            uid: userId,
+            quiz_id: quizId
+        })
+    return res
+}
+
+export const unlikeQuizInDb = (quizId, userId) => {
+    const res = axios.put('/api/put/unlike', {
             uid: userId,
             quiz_id: quizId
         })

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { createContainer } from 'unstated-next';
+import { likeQuizInDb, unlikeQuizInDb } from '../services/http';
 
 const LOCALSTORAGE_KEY = 'LIKED_QUIZZES';
 const UNIQUE_ID_KEY = "UNIQUE_ID"
@@ -21,8 +22,8 @@ const useLikedQuizzesContainer = () => {
     localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(likedQuizzes));
   }, [likedQuizzes]);
 
-  const isLiked = documentId => {
-    return !!likedQuizzes[documentId];
+  const isLiked = quizId => {
+    return !!likedQuizzes[quizId];
   };
 
   const likeQuiz = quiz => {
@@ -30,11 +31,13 @@ const useLikedQuizzesContainer = () => {
       ...likedQuizzes,
       [quiz.id]: quiz
     });
+    likeQuizInDb(quiz.id, uniqueId.current)
   };
 
-  const removeLikedQuiz = documentId => {
-    const { [documentId]: omit, ...quizzes } = likedQuizzes;
+  const removeLikedQuiz = quizId => {
+    const { [quizId]: omit, ...quizzes } = likedQuizzes;
     setLikedQuizzes(quizzes);
+    unlikeQuizInDb(quizId, uniqueId.current)
   };
 
   const toggleQuizLike = quiz => {

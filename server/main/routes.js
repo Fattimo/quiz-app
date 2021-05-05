@@ -99,18 +99,43 @@ router.delete('/api/delete/quiz', (req, res, next) => {
 })
 
 router.put('/api/put/likes', (req, res, next) => {
-  const uid = [req.body.uid]
-  const quiz_id = String(req.body.quiz_id)
+  const uid = req.body.uid
+  const quiz_id = req.body.quiz_id
 
-  const values = [ uid, quiz_id ]
-  pool.query(`UPDATE quizzes
-              SET like_user_id = like_user_id || $1, likes = likes + 1
-              WHERE NOT (like_user_id @> $1)
-              AND id = ($2)
-              RETURNING likes`,
+  const values = [ quiz_id ]
+  pool.query(
+    `UPDATE quizzes
+    SET likes = likes + 1
+    WHERE id = $1
+    RETURNING likes`,
+              // `UPDATE quizzes
+              // SET like_user_id = like_user_id || $1, likes = likes + 1
+              // WHERE NOT (like_user_id @> $1)
+              // AND id = ($2)
+              // RETURNING likes`,
      values, (q_err, q_res) => {
     if (q_err) return next(q_err);
-    console.log(q_res)
+    res.json(q_res.rows);
+  });
+});
+
+router.put('/api/put/unlike', (req, res, next) => {
+  const uid = req.body.uid
+  const quiz_id = req.body.quiz_id
+
+  const values = [ quiz_id ]
+  pool.query(
+    `UPDATE quizzes
+    SET likes = likes - 1
+    WHERE id = ($1)
+    RETURNING likes`,
+              // `UPDATE quizzes
+              // SET like_user_id = like_user_id || $1, likes = likes + 1
+              // WHERE NOT (like_user_id @> $1)
+              // AND id = ($2)
+              // RETURNING likes`,
+     values, (q_err, q_res) => {
+    if (q_err) return next(q_err);
     res.json(q_res.rows);
   });
 });

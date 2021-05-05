@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import QuizCard from "./QuizCard"
 import { getPaginatedQuizzes } from "../services/http"
 import LikedQuizzesContainer from "../containers/LikedQuizzesContainer"
+import HighestScoreContainer from "../containers/HighestScoreContainer"
 
 const InfiniteQuizScroll = () => {
     const ITEMS_PER_PAGE = 5
@@ -34,6 +35,8 @@ const InfiniteQuizScroll = () => {
         toggleQuizLike(quiz)
     }
 
+    const{ getHighestScore } = HighestScoreContainer.useContainer()
+
     return (
         <InfiniteScroll
             dataLength={quizzes.length}
@@ -47,7 +50,13 @@ const InfiniteQuizScroll = () => {
             }
         >
             {quizzes.map((i, index) => (
-                <QuizCard key={index} item={i} isLiked={isLiked(i.id)} toggleLike={handleLikeClick(i)}></QuizCard>
+                <QuizCard 
+                    key={index} 
+                    item={i} 
+                    isLiked={isLiked(i.id)} 
+                    toggleLike={handleLikeClick(i)} 
+                    highScore={getHighestScore(i.id)}
+                />
             ))}
         </InfiniteScroll>
     )

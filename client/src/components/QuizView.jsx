@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import QuizDetails from "./QuizDetails"
 import QuestionCard from "./QuestionCard"
 import { getQuiz, getQuizQuestions } from '../services/http'
+import HighestScoreContainer from "../containers/HighestScoreContainer"
 
 const useQuizGenerator = (quizId) => {
     const [questions, setQuestions] = useState([])
@@ -47,6 +48,7 @@ const useSubmission = () => {
         }
         setScore(score)
         setTotPoints(points)
+        return score/points * 100
     }
 
     return {submitted, score, totPoints, answers, submitQuiz, makeAnswer}
@@ -56,12 +58,17 @@ const useSubmission = () => {
 const QuizView = (props) => {
     const { questions, quizDetails } = useQuizGenerator(props.quizId)
     const { submitted, score, totPoints, answers, submitQuiz, makeAnswer} = useSubmission()
+    const { getHighestScore, saveScore } = HighestScoreContainer.useContainer()
 
-    const handleSubmitQuiz = () => submitQuiz(questions)
+    const highScore = getHighestScore(props.quizId)
+    const handleSubmitQuiz = () => {
+        const newScore = submitQuiz(questions)
+        saveScore(props.quizId, newScore)
+    }
 
     return (
         <div className="pb-8">
-            <QuizDetails details={quizDetails}/>
+            <QuizDetails details={quizDetails} highScore={highScore}/>
             <Results points={totPoints} score={score} submitted={submitted}/>
             {questions.map((i, index) => (
                 <QuestionCard 

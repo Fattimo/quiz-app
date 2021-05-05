@@ -14,26 +14,26 @@ const useHighestScoresContainer = () => {
     localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(highestScores));
   }, [highestScores]);
 
-  const isSaved = documentId => {
-    return !!highestScores[documentId];
+  const getHighestScore = quizId => {
+    return highestScores[quizId];
   };
 
   const saveScore = (quizId, score) => {
+    const old = highestScores[quizId]
     setHighestScores({
       ...highestScores,
-      [quizId]: score
+      [quizId]: old ? Math.max(score, old) : score
     });
   };
 
-  const removeSavedScore = documentId => {
-    const { [documentId]: omit, ...scores } = highestScores;
-    setHighestScores(scores);
-  };
-
+  // const removeSavedScore = quizId => {
+  //   const { [quizId]: omit, ...scores } = highestScores;
+  //   setHighestScores(scores);
+  // };
 
   return {
     highestScores,
-    isSaved,
+    getHighestScore,
     saveScore
   };
 };

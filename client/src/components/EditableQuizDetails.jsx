@@ -28,7 +28,6 @@ const EditableQuizDetails = (props) => {
         setDifficulty(header.difficulty || '🦆')
         title.current = header.title || "🦆"
         description.current = header.body || "🦆"
-        console.log('updated')
     }, [ header ])
     
 

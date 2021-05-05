@@ -4,6 +4,7 @@ import LikeButton from "./LikeButton"
 const QuizCard = (props) => {
     const { img, title, num_questions, id, creator, body, likes, difficulty } = props.item
     const liked = props.isLiked
+    const highScore = props.highScore
     return (
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl mb-5">
             <div className="md:flex">
@@ -23,7 +24,7 @@ const QuizCard = (props) => {
                         <p className="mt-1 text-base text-gray-700 oveflow-ellipsis">{body || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eros tortor, condimentum id quam quis, ornare tincidunt eros."}</p>    
                     </div>
                     <div className="text-xs text-gray-400 text-right flex justify-between mt-1">
-                        <p>Highest Score: idk</p>
+                        <p>Highest Score: {highScore || highScore===0 ? `${highScore}%` : "N/A"}</p>
                         <p>Created By: {creator || "Anonymous"}</p>
                     </div>
                 </div>
