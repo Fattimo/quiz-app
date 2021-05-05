@@ -8,26 +8,27 @@ const EditableQuizDetails = (props) => {
     const DIFFICULTIES = ['easy', 'medium', 'hard']
     const { header, changeProperty, numQuestions } = props
 
-    const [theme, setTheme] = useState('')
+    const [theme, setTheme] = useState("🦆")
     const handleThemeSelection = (dropdownResult) => setTheme(changeProperty("color", dropdownResult))
     
-    const [difficulty, setDifficulty] = useState('')
+    const [difficulty, setDifficulty] = useState("🦆")
     const handleDifficultySelection = (dropdownResult) => setDifficulty(changeProperty("difficulty", dropdownResult))
     
-    const title = useRef('Title')
+    const title = useRef("🦆")
     const handleTitleChange = (e) => title.current = changeProperty("title", e.target.value)
     
-    const description = useRef('Desc')
+    const description = useRef("🦆")
     const handleDescriptionChange = (e) => description.current = changeProperty("body", e.target.value)
     
     const [showTheme, setShowTheme] = useState(false)
     const [showDifficulty, setShowDifficulty] = useState(false)
 
     useEffect(() => {
-        setTheme(header.current.color || 'indigo')
-        setDifficulty(header.current.difficulty || 'easy')
-        title.current = header.current.title || "Title"
-        description.current = header.current.description || "Description"
+        setTheme(header.color || '🦆')
+        setDifficulty(header.difficulty || '🦆')
+        title.current = header.title || "🦆"
+        description.current = header.body || "🦆"
+        console.log('updated')
     }, [ header ])
     
 
@@ -56,7 +57,7 @@ const EditableQuizDetails = (props) => {
     return (
         <div className="pb-12 bg-white flex flex-col lg:flex-row items-center max-w-5xl xl:max-w-6xl 2xl:max-2-7xl mx-auto px-8 sm:px-20 lg:px-24 justify-center">
             <div className="flex flex-col items-center md:flex-row mb-10 sm:mb-5 md:mr-4">
-                <div className="md:flex-shrink-0 mb-5 md:mr-9 relative">
+                <div className="md:flex-shrink-0 md:mr-9 relative">
                     <img className="h-48 object-cover w-48" src={props.item?.img || "https://www.internetmatters.org/wp-content/uploads/2020/01/Quiz-1-600x315.png"} alt="Man looking at item at a store" />
                     <div className="absolute inset-0 opacity-0 hover:opacity-80 cursor-pointer overflow-hidden">
                     <img className="h-48 object-cover w-48 transform scale-110" src="https://cdn5.vectorstock.com/i/1000x1000/51/14/camera-icon-on-white-background-vector-17685114.jpg" alt="CCamera" />

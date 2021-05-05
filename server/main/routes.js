@@ -58,7 +58,6 @@ router.put('/api/put/quiz', (req, res, next) => {
                     req.body.num_questions,
                     req.body.quiz_id
                 ]
-                console.log(values)
   pool.query(`UPDATE quizzes SET title=$1, body=$2, difficulty=$3, color=$4, num_questions=$5, last_updated=NOW()
               WHERE id = $6
               RETURNING id`, values,
@@ -177,9 +176,10 @@ router.delete('/api/delete/question', (req, res, next) => {
 router.get('/api/get/allquestions', (req, res, next) => {
   const quiz_id = parseInt(req.query.quiz_id)
   pool.query(`
-  (SELECT q.id, q.quiz_id, q.body, q.points, (SELECT json_agg(ans) FROM (
-      SELECT * FROM question_answers WHERE question_id=q.id) ans
-  ) as responses from questions as q where quiz_id=$1)`, [ quiz_id ],
+  (SELECT q.id, q.quiz_id, q.body, q.points, 
+    (SELECT json_agg(ans) FROM (SELECT * FROM question_answers WHERE question_id=q.id) ans)
+    as responses, (select id from question_answers where question_id=q.id and correct) as correct
+  from questions as q where quiz_id=$1)`, [ quiz_id ],
               (q_err, q_res ) => {
                   res.json(q_res.rows)
       })
@@ -210,10 +210,12 @@ router.put('/api/put/answer', (req, res, next) => {
         req.body.correct, 
         req.body.response_id
     ]
+    console.log(values)
     pool.query(`UPDATE question_answers SET body=$2, question_id=$1, correct=$3
         WHERE id=$4
         RETURNING id`, values,
         (q_err, q_res) => {
+          console.log(q_res)
             res.json(q_res.rows)
             console.log(q_err)
         })
