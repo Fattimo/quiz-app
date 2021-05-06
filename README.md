@@ -24,18 +24,20 @@ client/src -> the part of the application served to the user.
 📑 pages -> contains the pages that the router can route to
 📦 containers -> contains containers used for state management of states used by numerous different (sibling) components
 👨‍ services/http -> the file containing requests to the corresponding API endpoints
+
 server/ -> global data pulled in from the Contentful CMS
 📊 bin/www -> the file used to actually start up the server
 📶 main -> where the main content of the server lives
    || db.js -> connects us to the PSQL databse
    || routes.js -> contains all of the API endpoints and their associated queries
    || schemas.sql -> non-functional file, but includes the tables of the database
+   
 app.js -> the express server, put here because it's easier to reference the build files from the root directory.
 ```
 
 ## Running Locally
 
-Make sure you have [yarn](https://yarnpkg.com/getting-started/install) installed first. Then, run this terminal command inside the root directory **AND** the `client` directory:
+Make sure you have [yarn](https://yarnpkg.com/getting-started/install) installed first. Then, run `yarn install` inside the root directory **AND** the `client` directory:
 
 ```sh
 yarn install
@@ -43,7 +45,7 @@ cd client
 yarn install
 ```
 
-Then, run this terminal command, again, inside the root directory **AND** the `client` directory. 
+Then, run `yarn start`, again, inside the root directory **AND** the `client` directory. 
 
 ```sh
 yarn start
@@ -56,7 +58,7 @@ cd client
 yarn install
 ```
 
-The root directory will start up the server on `localhost:5000` while the client directory will start up the frontend on `localhost:3000`. `client` has hot reloading enabled, but the server does not.
+The root directory will start up the server on `localhost:5000` while the client directory will start up the frontend on `localhost:3000`. `client` has hot reloading enabled, but `server` does not.
 
 ## Build for production
 
