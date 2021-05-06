@@ -45,6 +45,10 @@ cd client
 yarn install
 ```
 
+Also, be sure you have the database set up beforehand. I used the default Postgres local database (be sure to configure a `.env` file following the format of `example.env` using your own password and database). [You can download Postgres here](https://www.postgresql.org/download/)
+
+Then, open up the psql terminal and copy paste the [`schema.sql`](/server/main/schema.sql) file into the terminal. This should create the 3 tables needed for the application.
+
 Then, run `yarn start`, again, inside the root directory **AND** the `client` directory. 
 
 ```sh
