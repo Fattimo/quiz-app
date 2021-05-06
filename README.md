@@ -45,7 +45,7 @@ cd client
 yarn install
 ```
 
-Also, be sure you have the database set up beforehand. I used the default Postgres local database (be sure to configure a `.env` file following the format of `example.env` using your own password and database). [You can download Postgres here](https://www.postgresql.org/download/)
+Also, be sure you have the database set up before spinning up the servers. I used the default Postgres local database (be sure to configure a `.env` file following the format of [`example.env`](/example.env) using your own password and database). [You can download Postgres here](https://www.postgresql.org/download/)
 
 Then, open up the psql terminal and copy paste the [`schema.sql`](/server/main/schema.sql) file into the terminal. This should create the 3 tables needed for the application.
 
@@ -75,16 +75,17 @@ This will create the build folder for the React frontend. Once the build folder 
 
 ## Known Bugs/Unimplemented Features
 
-* Deleting a quiz after liking the quiz will still allow it to show up in the likes quizzes
+* Deleting a quiz after liking the quiz will still allow it to show up in the likes quizzes. Similarly, since Liked Quizzes are stored locally, the like number on these quizzes isn't actually reflective of what lives in the database.
+* Liking a quiz makes an API call, but should really only make a call after the component is unmounted. (Everything basically makes an API call, and there's potential to significantly reduce the number of these calls on the frontend using preexisting data.)
 * No Search functionality
-* Image setting on quizzes
 * Attempting to access a not-existing quiz (i.e. /quizzes/abc) will lead you to a broken screen, as there is no 400 response handling implemented just yet.
 * Jest test suite
-* Theme color doesn't do anything yet
+* Theme color doesn't do anything yet.
+* Image setting on quizzes is unimplemented.
 
 ## For Recruiters
 
-a.k.a my thoughts on the current iteration of the product
+a.k.a my thoughts on the current iteration of the product a.k.a. answering the remaining questions on the original Udemy prompt.
 
 As I got working on this project, I started to feel like the tech stack I chose was very cumbersome. Prior to this project, I made a very similar card-scrolling app using NextJS and MongoDB, and comparing the two projects, I think NextJS/SSR is simply just better than create-react-app and CSR, and I personally much prefer the flexibility of noSQL databases for smaller projects like these compared to a possibly more stable but inflexible SQL database. (This is why for Phase 2 of this app, I'm switching to NextJS and GraphQL. I haven't used GraphQL before, but reading through the docs, it seems to also sacrifice stability for flexibility.)
 

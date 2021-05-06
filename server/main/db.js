@@ -7,11 +7,11 @@ const connectConfig = isProduction ?
       rejectUnauthorized: false
     }, connectionString: process.env.DATABASE_URL } : 
     {
-        user: 'postgres',
-        host: 'localhost',
+        user: config.db_user,
+        host: config.db_host,
         database: config.db_name,
         password: config.db_password,
-        post: 5432
+        post: config.db_port
       }
 const pool = new Pool(connectConfig)
 
