@@ -38,12 +38,11 @@ export default function Nav() {
             </div>
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 {/*TODO: Replace logo with personal stuff*/}
-                <div className="flex-shrink-0 flex items-center">
-                <img className="block lg:hidden h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
+                <Link className="flex-shrink-0 flex items-center" to={'/quizzes'}>
+                <img className="block h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
                 <img className="hidden lg:block h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
                 <img className="hidden lg:block h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
-                <img className="hidden lg:block h-8 w-auto" src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="Workflow"/>
-                </div>
+                </Link>
                 <div className="hidden sm:block sm:ml-6">
                 <div className="flex space-x-4">
                 {navigation.map((item, index) => (<DashLink item={item} key={index}></DashLink>))}

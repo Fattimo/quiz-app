@@ -10,6 +10,7 @@ import Quiz from './pages/Quizzes';
 import About from './pages/About';
 import Liked from './pages/Liked'
 import New from './pages/New';
+import Error from "./pages/Error"
 import LikedQuizzesContainer from './containers/LikedQuizzesContainer'
 import HighestScoreContainer from './containers/HighestScoreContainer'
 
@@ -36,6 +37,9 @@ function App() {
               </Route>
               <Route path="/new">
                 <New />
+              </Route>
+              <Route path="/error">
+                <Error />
               </Route>
               <Route path="/">
                 <Redirect to="/quizzes" />

@@ -11,7 +11,7 @@ const HomeHeader= (props) => {
             <span className="block inline uppercase tracking-widest text-gray-700">Quiz Thing</span>
             </h1>
             <p className="mt-3 text-center text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl mx-auto md:mt-5 md:text-xl">
-            Tool created to make and take multiple choice quizzes! Currently unfinished, but you can create and take quizzes!
+            Tool created to make and take multiple choice quizzes!
             </p>
             <div className="mt-5 sm:mt-8 flex justify-center mb-5">
             <div className="rounded-md shadow w-44 sm:w-52">
@@ -31,7 +31,7 @@ const HomeHeader= (props) => {
                 </div>
             </div>
             </div>
-            <input className="mb-5 text-center px-8 py-2 rounded-md shadow-md border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent placeholder-indigo-500 placeholder-opacity-50" placeholder="Search Quizzes"></input>
+            <input className="mb-5 text-center px-8 py-2 rounded-md shadow-md border border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent placeholder-indigo-500 placeholder-opacity-50" placeholder="Search (Not Functional)"></input>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react"
-import ContentEditable from "react-contenteditable"
 
 import Dropdown from "./Dropdown"
+import ContentEditable from "./SanitizedContentEditable"
 
 const EditableQuizDetails = (props) => {
     const COLORS = ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink']
@@ -15,19 +15,19 @@ const EditableQuizDetails = (props) => {
     const handleDifficultySelection = (dropdownResult) => setDifficulty(changeProperty("difficulty", dropdownResult))
     
     const title = useRef("🦆")
-    const handleTitleChange = (e) => title.current = changeProperty("title", e.target.value)
+    const handleTitleChange = (value) => title.current = changeProperty("title", value)
     
     const description = useRef("🦆")
-    const handleDescriptionChange = (e) => description.current = changeProperty("body", e.target.value)
+    const handleDescriptionChange = (value) => description.current = changeProperty("body", value)
     
     const [showTheme, setShowTheme] = useState(false)
     const [showDifficulty, setShowDifficulty] = useState(false)
 
     useEffect(() => {
-        setTheme(header.color || '🦆')
-        setDifficulty(header.difficulty || '🦆')
-        title.current = header.title || "🦆"
-        description.current = header.body || "🦆"
+        setTheme(header.color)
+        setDifficulty(header.difficulty)
+        title.current = header.title
+        description.current = header.body
     }, [ header ])
     
 

@@ -144,8 +144,9 @@ export const getSampleQuestions = () => {
         id: Number.MIN_SAFE_INTEGER,
         body: "Sample Question",
         points: 1,
+        correct: Number.MIN_SAFE_INTEGER + 1,
         responses: [{
-            id: Number.MIN_SAFE_INTEGER,
+            id: Number.MIN_SAFE_INTEGER + 1,
             body: "Sample Response",
             correct: true
         }]

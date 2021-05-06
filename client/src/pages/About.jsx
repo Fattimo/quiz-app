@@ -17,7 +17,7 @@ function About(props) {
             <p>
                 Planned features that will be complete soon (if not complete already) is manipulation of local storage to save liked quizzes and store
                 highest score attempts, general UI updates to improve user experience, search, Jest test suites (on development side), 
-                saves on API calls (development), using a custom hook rather than a weird overbloated container for the quiz state management (development), 
+                saves on API calls (development), 
                 and general styling changes.
             </p>
             <br/>

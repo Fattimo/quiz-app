@@ -140,6 +140,14 @@ const EditableQuizView = (props) => {
     useEffect(() => {
         if (quizId === "new") {
             setQuestions(getSampleQuestions())
+            const sampleDetails = {
+                title: "Title",
+                body: "Description",
+                color: "indigo",
+                difficulty: "easy"
+            }
+            setQuizDetails(sampleDetails)
+            setInitialQuizDetails(sampleDetails)
             return
         }
         const fetchData = async () => {

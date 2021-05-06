@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 const LikeButton = (props) => {
     const {liked, tag, toggle, likes} = props
@@ -7,6 +7,9 @@ const LikeButton = (props) => {
         toggle()
         setDisplayedLikes(liked ? displayedLikes - 1 : displayedLikes + 1)
     }
+    useEffect(() => {
+        setDisplayedLikes(likes)
+    }, [likes])
 
     return (
         <div className="cursor-pointer flex" onClick={handleToggle}>
