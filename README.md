@@ -28,7 +28,7 @@ client/src -> the part of the application served to the user.
 server/ -> global data pulled in from the Contentful CMS
 📊 bin/www -> the file used to actually start up the server
 📶 main -> where the main content of the server lives
-   || db.js -> connects us to the PSQL databse
+   || db.js -> connects us to the PSQL database
    || routes.js -> contains all of the API endpoints and their associated queries
    || schemas.sql -> non-functional file, but includes the tables of the database
    
@@ -85,7 +85,7 @@ This will create the build folder for the React frontend. Once the build folder 
 
 a.k.a my thoughts on the current iteration of the product
 
-As I got working on this project, I started to feel like the tech stack I chose was very cumbersome. Prior to this project, I made a very similar card-scrolling app using NextJS and MongoDB, and comparing the two projects, I think NextJS/SSR is simply just better than create-react-app and CSR, and I personally much prefer the flexibility of noSQL databases for smaller projects like these compared to a possibly more stable but inflexible SQL databse. (This is why for Phase 2 of this app, I'm switching to NextJS and GraphQL. I haven't used GraphQL before, but reading through the docs, it seems to also sacrifice stability for flexibility.)
+As I got working on this project, I started to feel like the tech stack I chose was very cumbersome. Prior to this project, I made a very similar card-scrolling app using NextJS and MongoDB, and comparing the two projects, I think NextJS/SSR is simply just better than create-react-app and CSR, and I personally much prefer the flexibility of noSQL databases for smaller projects like these compared to a possibly more stable but inflexible SQL database. (This is why for Phase 2 of this app, I'm switching to NextJS and GraphQL. I haven't used GraphQL before, but reading through the docs, it seems to also sacrifice stability for flexibility.)
 
 Honestly, the only reason I chose the stack that I did was that I wanted to force myself to use a relational database (my other option was a python based backend) and _not_ NextJS for a project.
 
