@@ -25,7 +25,7 @@ const HomeHeader= (props) => {
             <div className="ml-3 w-44 sm:w-52">
                 <div
                 onClick={()=>setRedirect("/liked")}
-                className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                className="w-full cursor-pointer flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
                 >
                 Liked Quizzes
                 </div>
