@@ -80,6 +80,7 @@ This will create the build folder for the React frontend. Once the build folder 
 * Image setting on quizzes
 * Attempting to access a not-existing quiz (i.e. /quizzes/abc) will lead you to a broken screen, as there is no 400 response handling implemented just yet.
 * Jest test suite
+* Theme color doesn't do anything yet
 
 ## For Recruiters
 
