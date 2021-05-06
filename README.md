@@ -14,7 +14,7 @@ This project makes use of the PERN stack ([PostgreSQL](https://www.postgresql.or
 
 As for the pages themselves, the main components used were the [React Router](https://reactrouter.com/) for page management and [React-ContentEditable](https://github.com/lovasoa/react-contenteditable) for form inputs. Speaking of forms, no state management library like Redux was used, but I do have a couple of containers from [unstated-next](https://github.com/jamiebuilds/unstated-next) that manage local storage manipulation (for liked quizzes and high scores). As for CSS (or the lack thereof), I used [Tailwind](https://tailwindcss.com), which supplies utility class styles for use across all elements. I think it looks pretty cool for minimal effort, which is why I use it, but a more technical motivation for using it is that it can also reduce bundle size when deploying. Also, it makes restyling for different sized displays really easy, so change your screen size to see different layouts and such. ⛲
 
-In terms of the future of this project, I am likely going to port over all of the existing work into a NextJS and Apollo/GraphQL shell and continue from there.
+In terms of the future of this project, I am likely going to port over all of the existing work into a NextJS (Or maybe NuxtJS, because I'm reading through Vue docs and I really want to use that now) and Apollo/GraphQL shell and continue from there.
 
 ## Project structure
 
