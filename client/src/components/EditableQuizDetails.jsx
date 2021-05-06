@@ -65,12 +65,12 @@ const EditableQuizDetails = (props) => {
                 <div className="flex flex-col w-60 sm:w-72 md:w-96 items-start items-center text-center md:text-left md:items-start">
                     <h2 className="pl-1 text-base text-indigo-600 font-semibold tracking-wide uppercase text-left">Click Anything To Edit: </h2>
                     <ContentEditable 
-                        className="p-1 mt-2 w-full break-words text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
+                        className="p-1 mt-2 w-full break-words border-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
                         html={title.current}
                         onChange={handleTitleChange}
                     />
                     <ContentEditable 
-                        className="mt-2 text-xl text-gray-700 w-full p-1 break-words"
+                        className="mt-2 text-xl text-gray-700 w-full p-1 break-words border-2"
                         html={description.current}
                         onChange={handleDescriptionChange}
                     />

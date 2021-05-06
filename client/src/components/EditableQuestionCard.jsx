@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import Dropdown from "./Dropdown"
-import ContentEditable from "react-contenteditable"
+import ContentEditable from "./SanitizedContentEditable"
 
 const EditableQuestionCard = (props) => {
     const {question, trash, number, changeQuestionProperty, removeQuestion, addResponse, removeResponse, changeResponseProperty } = props
@@ -22,7 +22,7 @@ const EditableQuestionCard = (props) => {
     const toggleShowPoints = () => setShowPoints(!showPoints)
     
     const body  = useRef(question.body)
-    const handleBodyChange = (e) => body.current = changeQuestionProperty("body", e.target.value)
+    const handleBodyChange = (value) => body.current = changeQuestionProperty("body", value)
 
     const [correctId, setCorrectId] = useState(question.correct)
     const handleCorrectIdChange = (id) => () => setCorrectId(changeQuestionProperty("correct", id))
@@ -58,7 +58,7 @@ const EditableQuestionCard = (props) => {
                                 </div>
                             </div>
                             <ContentEditable 
-                                className="text-gray-500 mt-2"
+                                className="text-gray-500 mt-2 border"
                                 html={body.current}
                                 onChange={handleBodyChange}
                             />
@@ -92,7 +92,7 @@ const EditableQuestionCard = (props) => {
 const AnswerRow = (props) => {
     const response = props.response
     const body = useRef(response.body)
-    const handleBodyChange = e => body.current = props.setProperty("body", e.target.value)
+    const handleBodyChange = value => body.current = props.setProperty("body", value)
 
     return (
     <div className="flex items-center">
@@ -105,7 +105,7 @@ const AnswerRow = (props) => {
         onChange={props.handleChange}
     />
     <ContentEditable
-        className="ml-3 block text-sm font-medium text-gray-700 px-2 w-11/12 flex-grow break-words"
+        className="ml-3 block border text-sm font-medium text-gray-700 px-2 w-11/12 flex-grow break-words"
         html={body.current}
         onChange={handleBodyChange}
     />
